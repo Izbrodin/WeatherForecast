@@ -17,6 +17,7 @@ class TimeUpdatedTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        updatedLabel.text = "Обновлено:"
         // Initialization code
     }
 

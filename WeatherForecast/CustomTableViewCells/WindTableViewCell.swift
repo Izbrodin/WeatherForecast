@@ -20,7 +20,10 @@ class WindTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
+        windHeader.text = "Ветер"
+        
+        directionLabel.text = "Направление"
+        speedLabel.text = "Скорость"    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

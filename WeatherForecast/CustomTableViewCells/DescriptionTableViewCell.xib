@@ -6,34 +6,36 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="108" id="KGk-i7-Jjw" customClass="DescriptionTableViewCell" customModule="WeatherForecast" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="DescriptionTableViewCell" customModule="WeatherForecast" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="94.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tZU-ga-518">
-                        <rect key="frame" x="5" y="14" width="80" height="80"/>
+                        <rect key="frame" x="5" y="5" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="F4q-ft-Rxd"/>
+                            <constraint firstAttribute="width" secondItem="tZU-ga-518" secondAttribute="height" multiplier="1:1" id="XxC-bw-ekm"/>
                             <constraint firstAttribute="height" constant="80" id="hAt-eO-Dyr"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7v-9u-1ja">
-                        <rect key="frame" x="100" y="41.5" width="52.5" height="26.5"/>
+                        <rect key="frame" x="100" y="31.5" width="52.5" height="26.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6v-6F-Ti6">
-                        <rect key="frame" x="167.5" y="37" width="71" height="36"/>
+                        <rect key="frame" x="167.5" y="27" width="71" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -43,7 +45,9 @@
                     <constraint firstItem="tZU-ga-518" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="25h-iU-5Eb"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="leading" secondItem="u7v-9u-1ja" secondAttribute="trailing" constant="15" id="2ak-dk-QLF"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8ck-Zg-Jy2"/>
+                    <constraint firstItem="tZU-ga-518" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="9D1-ws-peB"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EUg-N6-Ce0"/>
+                    <constraint firstAttribute="bottom" secondItem="tZU-ga-518" secondAttribute="bottom" constant="5" id="FF3-p7-ntd"/>
                     <constraint firstItem="tZU-ga-518" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="L8Y-OW-1JF"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="leading" secondItem="tZU-ga-518" secondAttribute="trailing" constant="15" id="iLO-6E-mGx"/>
                 </constraints>
@@ -54,7 +58,7 @@
                 <outlet property="weatherDescription" destination="u7v-9u-1ja" id="R3e-O9-WjE"/>
                 <outlet property="weatherImage" destination="tZU-ga-518" id="Qgz-Ls-9Zs"/>
             </connections>
-            <point key="canvasLocation" x="41.5" y="84"/>
+            <point key="canvasLocation" x="41.5" y="76.5"/>
         </tableViewCell>
     </objects>
 </document>

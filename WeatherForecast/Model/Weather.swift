@@ -33,8 +33,6 @@ class Weather: Mappable, CustomStringConvertible {
         cityName <- map["name"]
         dateAndTime = mapDate(map["dt"])
         
-        //temperature <- map["main.temp"]
-        
         if let temperature = map["main.temp"].currentValue as? Double {
             self.temperature = Temperature(value: temperature)
         }

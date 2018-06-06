@@ -47,7 +47,6 @@ class TodayForecastViewController: UIViewController, UITableViewDataSource, UITa
             let cell = Bundle.main.loadNibNamed("TimeUpdatedTableViewCell", owner: self, options: nil)?.first as! TimeUpdatedTableViewCell
             
             if let timeUpdated = weather?.dateAndTime {
-            cell.updatedLabel.text = "Обновлено:"
             cell.timeUpdated.text = timeUpdated
             }
             return cell
@@ -72,17 +71,9 @@ class TodayForecastViewController: UIViewController, UITableViewDataSource, UITa
             let cell = Bundle.main.loadNibNamed("WindTableViewCell", owner: self, options: nil)?.first as! WindTableViewCell
             
             if let wind = weather?.wind {
-            cell.windHeader.text = "Ветер"
-            
-            cell.directionLabel.text = "Направление"
-            cell.speedLabel.text = "Скорость"
-        
-            
-            cell.setWindDirection(/*wind.degrees*/ 310.0)
+            cell.setWindDirection(wind.degrees)
             cell.direction.text = wind.getDirection()
-            
             cell.speed.text = wind.description
-                
             }
             return cell
         }
@@ -100,10 +91,6 @@ class TodayForecastViewController: UIViewController, UITableViewDataSource, UITa
             return cell
         }
     }
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,18 +120,6 @@ class TodayForecastViewController: UIViewController, UITableViewDataSource, UITa
         tableViewTodayForecast.dataSource = self
 
     }
-    
-    /*  func getWeather(_ request: String) -> JSON {
-     Alamofire.request(request, method: .get).validate().responseJSON { response in
-     switch response.result {
-     case .success(let value):
-     return JSON(value)
-     //print("JSON: \(json)")
-     case .failure(let error):
-     print(error)
-     }
-     }
-     }*/
     
     func loadTodayWeather() {
         let city = "Penza"
