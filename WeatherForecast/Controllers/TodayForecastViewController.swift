@@ -14,6 +14,7 @@ class TodayForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadTodayWeather()
         tableViewTodayForecast.delegate = self
         tableViewTodayForecast.dataSource = self
         
@@ -23,9 +24,6 @@ class TodayForecastViewController: UIViewController {
         tableViewTodayForecast.register(cellClass: WindTableViewCell.self)
         tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
         tableViewTodayForecast.register(cellClass: ParameterTableViewCell.self)
-        
-        loadTodayWeather()
-        
         //let weather = OpenWeatherAPI(url!).getWeather()
     }
     
