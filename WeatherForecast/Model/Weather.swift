@@ -69,6 +69,7 @@ class Weather: Mappable, CustomStringConvertible {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
         formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "ru_RU")
 
         if let dateTimeInterval = map.currentValue as? Double {
             let dateUTC = Date(timeIntervalSince1970: dateTimeInterval)

@@ -5,120 +5,27 @@ import SwiftyJSON
 import ObjectMapper
 import Kingfisher
 
-class TodayForecastViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TodayForecastViewController: UIViewController {
     
     @IBOutlet weak var tableViewTodayForecast: UITableView!
+    
     var weather: Weather?
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return 8
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        if indexPath.row == 0 {
-            return 75
-        }
-        else if indexPath.row == 1 {
-            return 75
-        }
-        else if indexPath.row == 2 {
-            return 110
-        }
-        else if indexPath.row == 3 {
-            return 160
-        }
-        else {
-            return 75
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = Bundle.main.loadNibNamed("CityNameTableViewCell", owner: self, options: nil)?.first as! CityNameTableViewCell
-            
-            if let cityName = weather?.cityName {
-                cell.cityName.text = cityName
-            }
-            return cell
-        }
-        else if indexPath.row == 1 {
-            let cell = Bundle.main.loadNibNamed("TimeUpdatedTableViewCell", owner: self, options: nil)?.first as! TimeUpdatedTableViewCell
-            
-            if let timeUpdated = weather?.dateAndTime {
-            cell.timeUpdated.text = timeUpdated
-            }
-            return cell
-        }
-       else if indexPath.row == 2 {
-            let cell = Bundle.main.loadNibNamed("DescriptionTableViewCell", owner: self, options: nil)?.first as! DescriptionTableViewCell
-            
-            if let iconName = weather?.icon {
-                let iconUrl = "http://openweathermap.org/img/w/" + iconName + ".png"
-                let url = URL(string: iconUrl)
-                cell.weatherImage.kf.setImage(with: url)
-            }
-            if let conditions = weather?.conditions {
-                cell.weatherDescription.text = conditions
-            }
-            if let temperature = weather?.temperature {
-                cell.temperature.text = temperature.description
-            }
-            return cell
-        }
-        else if indexPath.row == 3 {
-            let cell = Bundle.main.loadNibNamed("WindTableViewCell", owner: self, options: nil)?.first as! WindTableViewCell
-            
-            if let wind = weather?.wind {
-            cell.setWindDirection(wind.degrees)
-            cell.direction.text = wind.getDirection()
-            cell.speed.text = wind.description
-            }
-            return cell
-        }
-        else if indexPath.row == 4 {
-             let cell = Bundle.main.loadNibNamed("ParameterTableViewCell", owner: self, options: nil)?.first as!
-                ParameterTableViewCell
-            cell.parameterLabel.text = "Давление"
-            if let pressure = weather?.pressure {
-                cell.parameterValue.text = pressure.description
-            }
-            return cell
-        }
-        else {
-            let cell = Bundle.main.loadNibNamed("TimeUpdatedTableViewCell", owner: self, options: nil)?.first as! TimeUpdatedTableViewCell
-            return cell
-        }
-    }
+    var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableViewTodayForecast.delegate = self
+        tableViewTodayForecast.dataSource = self
         
-        /*tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self, forCellReuseIdentifier: "cityNameCell")*/
-       
-        /*
-        tableViewTodayForecast.register(CityNameTableViewCell.self, forCellReuseIdentifier: "cityNameCell")
-        tableViewTodayForecast.register(TimeUpdatedTableViewCell.self, forCellReuseIdentifier: "timeUpdatedTableViewCell")
-        */
-        
-        
-        
-        
+        tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
+        tableViewTodayForecast.register(cellClass: TimeUpdatedTableViewCell.self)
+        tableViewTodayForecast.register(cellClass: DescriptionTableViewCell.self)
+        tableViewTodayForecast.register(cellClass: WindTableViewCell.self)
+        tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
         
         loadTodayWeather()
         
-        //self.tableViewTodayForecast = self
-        
-        /*let cityNameNib = UINib(nibName: "cityNameCell", bundle: nil)
-        tableViewTodayForecast.register(cityNameNib, forCellReuseIdentifier: "cityNameCell")
-        */
-
         //let weather = OpenWeatherAPI(url!).getWeather()
-
-        tableViewTodayForecast.delegate = self
-        tableViewTodayForecast.dataSource = self
-
     }
     
     func loadTodayWeather() {
@@ -158,9 +65,50 @@ class TodayForecastViewController: UIViewController, UITableViewDataSource, UITa
             }
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+}
+
+extension TodayForecastViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellTypes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch cellTypes[indexPath.row] {
+        case .CityName:
+            let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            
+            if let city = weather?.cityName {
+            cell.updateCity(name: city)
+            }
+            return cell
+        case .TimeUpdated:
+            let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            if let timeUpdated = weather?.dateAndTime {
+                cell.update(dateAndTime: timeUpdated)
+            }
+            return cell
+        case .Description:
+            let cell: DescriptionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(weather: weather)
+            return cell
+        case .Wind:
+            let cell: WindTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(weather: weather)
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+
+    extension TodayForecastViewController: UITableViewDelegate {
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+        {
+            //height for each type of cells
+            return cellTypes[indexPath.row].getHeight()
+        }
+ 
 }

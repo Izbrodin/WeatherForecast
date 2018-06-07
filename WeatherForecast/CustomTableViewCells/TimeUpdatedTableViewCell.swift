@@ -10,10 +10,10 @@ import UIKit
 
 class TimeUpdatedTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var updatedLabel: UILabel!
+    @IBOutlet weak private var updatedLabel: UILabel!
     
     
-    @IBOutlet weak var timeUpdated: UILabel!
+    @IBOutlet weak private var timeUpdated: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,4 +27,7 @@ class TimeUpdatedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func update(dateAndTime: String) {
+        timeUpdated.text = dateAndTime
+    }
 }

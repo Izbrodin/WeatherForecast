@@ -10,7 +10,7 @@ import UIKit
 
 class CityNameTableViewCell: UITableViewCell {
 
-    @IBOutlet var cityName: UILabel!
+    @IBOutlet private var cityName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +21,10 @@ class CityNameTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func updateCity(name: String) {
+        self.cityName.text = name
     }
     
 }

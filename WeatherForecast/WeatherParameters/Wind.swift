@@ -15,7 +15,7 @@ struct Wind {
 
 extension Wind: CustomStringConvertible {
     var description: String {
-        return String(self.speed) + "м/с"
+        return String(self.speed) + " м/с"
     }
     
     func getDirection() -> String {
