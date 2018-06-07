@@ -10,7 +10,7 @@ class TodayForecastViewController: UIViewController {
     @IBOutlet weak var tableViewTodayForecast: UITableView!
     
     var weather: Weather?
-    var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind]
+    var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,7 @@ class TodayForecastViewController: UIViewController {
         tableViewTodayForecast.register(cellClass: DescriptionTableViewCell.self)
         tableViewTodayForecast.register(cellClass: WindTableViewCell.self)
         tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
+        tableViewTodayForecast.register(cellClass: ParameterTableViewCell.self)
         
         loadTodayWeather()
         
@@ -40,9 +41,6 @@ class TodayForecastViewController: UIViewController {
          let todayWeatherRequest = "http://api.openweathermap.org/data/2.5/weather?q=Penza,ru&APPID=04fe9bc8bdd23ab05caa33af5b162552&lang=ru&units=metric"
          */
         
-    
-        //let weather = OpenWeatherAPI(url!).getWeather()
-        
         let url = URLBuilder()
             .set(scheme: "http")
             .set(host: "api.openweathermap.org")
@@ -53,17 +51,19 @@ class TodayForecastViewController: UIViewController {
             .addQueryItem(name: "appid", value: appId)
             .build()
         
+        //let weather = OpenWeatherAPI(url!).getWeather()
+        
+        
         Alamofire.request(url!, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
                 print(JSON(value))
                 self.weather =  Mapper<Weather>().map(JSONObject: value)
-                
                 self.tableViewTodayForecast.reloadData()
             case .failure(let error):
                 print(error)
             }
-        }
+        } 
     }
 }
 
@@ -98,6 +98,22 @@ extension TodayForecastViewController: UITableViewDataSource {
         case .Wind:
             let cell: WindTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.update(weather: weather)
+            return cell
+        case .Pressure:
+            let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(pressure: weather?.pressure)
+            return cell
+        case .Humidity:
+            let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(humidity: weather?.humidity)
+            return cell
+        case .Sunrise:
+            let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(parameter: .sunrise, from: weather)
+            return cell
+        case .Sunset:
+            let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.update(parameter: .sunset, from: weather)
             return cell
         }
         return UITableViewCell()

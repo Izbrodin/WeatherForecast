@@ -12,6 +12,7 @@
 		8423992720B5A8BD009102CE /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423992620B5A8BD009102CE /* Wind.swift */; };
 		8423992920B5AA5F009102CE /* Pressure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423992820B5AA5F009102CE /* Pressure.swift */; };
 		8423992B20B5AAF3009102CE /* Humidity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423992A20B5AAF3009102CE /* Humidity.swift */; };
+		842CF09620C94F8300B1967B /* SunMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CF09520C94F8300B1967B /* SunMode.swift */; };
 		84515C9C20B8347A008F64A4 /* OpenWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84515C9B20B8347A008F64A4 /* OpenWeatherAPI.swift */; };
 		84515C9E20B83553008F64A4 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84515C9D20B83553008F64A4 /* Forecast.swift */; };
 		8452440520C6855A001A0E53 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452440420C6855A001A0E53 /* Temperature.swift */; };
@@ -41,6 +42,7 @@
 		8423992620B5A8BD009102CE /* Wind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
 		8423992820B5AA5F009102CE /* Pressure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pressure.swift; sourceTree = "<group>"; };
 		8423992A20B5AAF3009102CE /* Humidity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Humidity.swift; sourceTree = "<group>"; };
+		842CF09520C94F8300B1967B /* SunMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMode.swift; sourceTree = "<group>"; };
 		84515C9B20B8347A008F64A4 /* OpenWeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherAPI.swift; sourceTree = "<group>"; };
 		84515C9D20B83553008F64A4 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		8452440420C6855A001A0E53 /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				84515C9D20B83553008F64A4 /* Forecast.swift */,
 				84ABF09920C7E49500068982 /* CellType.swift */,
+				842CF09520C94F8300B1967B /* SunMode.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				8452440520C6855A001A0E53 /* Temperature.swift in Sources */,
 				8423992920B5AA5F009102CE /* Pressure.swift in Sources */,
 				84ABF09A20C7E49500068982 /* CellType.swift in Sources */,
+				842CF09620C94F8300B1967B /* SunMode.swift in Sources */,
 				8484848920B45CB60075981C /* AppDelegate.swift in Sources */,
 				84925D8120C16D0800D46DAB /* WindTableViewCell.swift in Sources */,
 				8474C8BC20C4915A00759EBC /* TimeUpdatedTableViewCell.swift in Sources */,
