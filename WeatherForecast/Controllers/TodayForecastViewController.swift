@@ -4,26 +4,26 @@ import SwiftyJSON
 import ObjectMapper
 import Kingfisher
 
-class TodayForecastViewController: UIViewController {
+class CurrentWeatherViewController: UIViewController {
     
-    @IBOutlet weak var tableViewTodayForecast: UITableView!
+    @IBOutlet weak var tableViewCurrentWeather: UITableView!
     
     var weather: Weather?
     var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
-        tableViewTodayForecast.register(cellClass: TimeUpdatedTableViewCell.self)
-        tableViewTodayForecast.register(cellClass: DescriptionTableViewCell.self)
-        tableViewTodayForecast.register(cellClass: WindTableViewCell.self)
-        tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
-        tableViewTodayForecast.register(cellClass: ParameterTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: DescriptionTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: WindTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
         
         loadCurrentWeather()
         
-        tableViewTodayForecast.delegate = self
-        tableViewTodayForecast.dataSource = self
+        tableViewCurrentWeather.delegate = self
+        tableViewCurrentWeather.dataSource = self
     }
     
     func loadCurrentWeather() {
@@ -45,12 +45,12 @@ class TodayForecastViewController: UIViewController {
         
         OpenWeatherAPI(url!).request(completion: {(weather) in
             self.weather = weather
-            self.tableViewTodayForecast.reloadData()
+            self.tableViewCurrentWeather.reloadData()
         })
     }
 }
 
-extension TodayForecastViewController: UITableViewDataSource {
+extension CurrentWeatherViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -103,7 +103,7 @@ extension TodayForecastViewController: UITableViewDataSource {
     }
 }
 
-    extension TodayForecastViewController: UITableViewDelegate {
+    extension CurrentWeatherViewController: UITableViewDelegate {
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
         {
             //height for each type of cells

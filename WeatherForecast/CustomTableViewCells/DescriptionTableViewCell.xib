@@ -15,20 +15,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="DescriptionTableViewCell" customModule="WeatherForecast" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="94.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tZU-ga-518">
-                        <rect key="frame" x="15" y="5" width="85" height="84.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="tZU-ga-518" secondAttribute="height" multiplier="1:1" id="XxC-bw-ekm"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6v-6F-Ti6">
-                        <rect key="frame" x="152" y="29.5" width="71" height="36"/>
+                        <rect key="frame" x="152" y="42" width="71" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -39,14 +33,18 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tZU-ga-518">
+                        <rect key="frame" x="15" y="17" width="85" height="84.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="tZU-ga-518" secondAttribute="height" multiplier="1:1" id="XxC-bw-ekm"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="tZU-ga-518" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="25h-iU-5Eb"/>
-                    <constraint firstItem="tZU-ga-518" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="9D1-ws-peB"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EUg-N6-Ce0"/>
-                    <constraint firstAttribute="bottom" secondItem="tZU-ga-518" secondAttribute="bottom" constant="5" id="FF3-p7-ntd"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="L1s-2K-ASR"/>
                     <constraint firstItem="tZU-ga-518" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="L8Y-OW-1JF"/>
+                    <constraint firstItem="tZU-ga-518" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NC9-Hn-xJm"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="RG7-We-Ewp"/>
                     <constraint firstItem="tZU-ga-518" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="85:375" id="yNg-Aw-C6Y"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="zkj-BN-q7E"/>
