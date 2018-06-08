@@ -19,14 +19,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Обновлено:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZs-NS-GSF">
-                        <rect key="frame" x="5" y="24" width="119" height="27"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Обновлено:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZs-NS-GSF">
+                        <rect key="frame" x="15" y="24" width="119" height="27"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="km6-Wn-8JT">
-                        <rect key="frame" x="132" y="24" width="52.5" height="27"/>
+                        <rect key="frame" x="142" y="24" width="52.5" height="27"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -36,7 +36,7 @@
                     <constraint firstItem="eZs-NS-GSF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0Q2-pv-4MT"/>
                     <constraint firstItem="km6-Wn-8JT" firstAttribute="leading" secondItem="eZs-NS-GSF" secondAttribute="trailing" constant="8" id="My5-fh-wg1"/>
                     <constraint firstItem="km6-Wn-8JT" firstAttribute="bottom" secondItem="eZs-NS-GSF" secondAttribute="bottom" id="ZCz-ft-DHg"/>
-                    <constraint firstItem="eZs-NS-GSF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="uug-dh-2is"/>
+                    <constraint firstItem="eZs-NS-GSF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="uug-dh-2is"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -22,13 +22,13 @@ enum CellType {
     func getHeight() -> CGFloat {
         switch self {
         case .CityName: return 75
-        case .TimeUpdated: return 75
-        case .Description: return 100
+        case .TimeUpdated: return 65
+        case .Description: return 120
         case .Wind: return 150
-        case .Pressure: return 70
-        case .Humidity: return 70
-        case .Sunrise: return 70
-        case .Sunset: return 70
+        case .Pressure: return 47
+        case .Humidity: return 47
+        case .Sunrise: return 47
+        case .Sunset: return 47
         }
     }
 }

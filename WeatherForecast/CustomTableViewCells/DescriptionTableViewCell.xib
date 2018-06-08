@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,15 +22,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tZU-ga-518">
-                        <rect key="frame" x="5" y="5" width="80" height="80"/>
+                        <rect key="frame" x="15" y="5" width="85" height="84.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="F4q-ft-Rxd"/>
                             <constraint firstAttribute="width" secondItem="tZU-ga-518" secondAttribute="height" multiplier="1:1" id="XxC-bw-ekm"/>
-                            <constraint firstAttribute="height" constant="80" id="hAt-eO-Dyr"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6v-6F-Ti6">
-                        <rect key="frame" x="152" y="27" width="71" height="36"/>
+                        <rect key="frame" x="152" y="29.5" width="71" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -47,8 +46,9 @@
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EUg-N6-Ce0"/>
                     <constraint firstAttribute="bottom" secondItem="tZU-ga-518" secondAttribute="bottom" constant="5" id="FF3-p7-ntd"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="L1s-2K-ASR"/>
-                    <constraint firstItem="tZU-ga-518" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="L8Y-OW-1JF"/>
+                    <constraint firstItem="tZU-ga-518" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="L8Y-OW-1JF"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="RG7-We-Ewp"/>
+                    <constraint firstItem="tZU-ga-518" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="85:375" id="yNg-Aw-C6Y"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="zkj-BN-q7E"/>
                 </constraints>
             </tableViewCellContentView>

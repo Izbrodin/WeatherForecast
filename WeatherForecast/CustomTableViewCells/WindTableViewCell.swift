@@ -23,7 +23,8 @@ class WindTableViewCell: UITableViewCell {
         windHeader.text = "Ветер"
         
         directionLabel.text = "Направление:"
-        speedLabel.text = "Скорость:"    }
+        speedLabel.text = "Скорость:"
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

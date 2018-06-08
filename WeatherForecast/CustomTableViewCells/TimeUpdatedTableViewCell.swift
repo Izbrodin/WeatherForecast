@@ -18,6 +18,10 @@ class TimeUpdatedTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         updatedLabel.text = "Обновлено:"
+        /*
+        timeUpdated?.numberOfLines = 1
+        timeUpdated?.adjustsFontSizeToFitWidth = true
+        timeUpdated?.minimumScaleFactor*/
         // Initialization code
     }
 

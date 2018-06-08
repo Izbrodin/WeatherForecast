@@ -1,5 +1,4 @@
 import UIKit
-
 import Alamofire
 import SwiftyJSON
 import ObjectMapper
@@ -14,30 +13,25 @@ class TodayForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTodayWeather()
-        tableViewTodayForecast.delegate = self
-        tableViewTodayForecast.dataSource = self
-        
         tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
         tableViewTodayForecast.register(cellClass: TimeUpdatedTableViewCell.self)
         tableViewTodayForecast.register(cellClass: DescriptionTableViewCell.self)
         tableViewTodayForecast.register(cellClass: WindTableViewCell.self)
         tableViewTodayForecast.register(cellClass: CityNameTableViewCell.self)
         tableViewTodayForecast.register(cellClass: ParameterTableViewCell.self)
-        //let weather = OpenWeatherAPI(url!).getWeather()
+        
+        loadCurrentWeather()
+        
+        tableViewTodayForecast.delegate = self
+        tableViewTodayForecast.dataSource = self
     }
     
-    func loadTodayWeather() {
+    func loadCurrentWeather() {
         let city = "Penza"
         let countryIndex = "ru"
         let languageIndex = "ru"
         let units = "metric"
         let appId = "04fe9bc8bdd23ab05caa33af5b162552"
-        
-        /*let requestFor5Days = "http://api.openweathermap.org/data/2.5/forecast?q=Penza,ru&APPID=04fe9bc8bdd23ab05caa33af5b162552&lang=ru&units=metric"
-         
-         let todayWeatherRequest = "http://api.openweathermap.org/data/2.5/weather?q=Penza,ru&APPID=04fe9bc8bdd23ab05caa33af5b162552&lang=ru&units=metric"
-         */
         
         let url = URLBuilder()
             .set(scheme: "http")
@@ -49,19 +43,10 @@ class TodayForecastViewController: UIViewController {
             .addQueryItem(name: "appid", value: appId)
             .build()
         
-        //let weather = OpenWeatherAPI(url!).getWeather()
-        
-        
-        Alamofire.request(url!, method: .get).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                print(JSON(value))
-                self.weather =  Mapper<Weather>().map(JSONObject: value)
-                self.tableViewTodayForecast.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        } 
+        OpenWeatherAPI(url!).request(completion: {(weather) in
+            self.weather = weather
+            self.tableViewTodayForecast.reloadData()
+        })
     }
 }
 
