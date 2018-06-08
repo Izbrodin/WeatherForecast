@@ -1,8 +1,4 @@
 import UIKit
-import Alamofire
-import SwiftyJSON
-import ObjectMapper
-import Kingfisher
 
 class CurrentWeatherViewController: UIViewController {
     
