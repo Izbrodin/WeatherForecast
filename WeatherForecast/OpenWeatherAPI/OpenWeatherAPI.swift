@@ -18,18 +18,31 @@ class OpenWeatherAPI{
        requestUrl = url.absoluteString
     }
     
-    func request(completion: @escaping (Weather?)->()) {
+    func requestCurrentWeather(completion: @escaping (Weather?)->()) {
         Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
-                //print(value)
                 let weather = Mapper<Weather>().map(JSONObject: value)
                 completion(weather)
-                //let w =  Mapper<Weather>().map(JSONObject: value)
-                //print("&&&&", w?.description)
-            //responseJson = value
             case .failure(let error):
                 completion(nil)
+                print(error)
+            }
+        }
+    }
+    
+    func requestForecastFor5Days(completion: @escaping ([Weather])->()){
+    
+        Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                 let weatherForecast = Mapper<WeatherForecast>().map(JSONObject: value)
+                 
+                 if let list = weatherForecast?.list {
+                    completion(list)
+                 }
+            case .failure(let error):
+                completion([])
                 print(error)
             }
         }

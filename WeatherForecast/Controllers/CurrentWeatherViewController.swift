@@ -39,7 +39,7 @@ class CurrentWeatherViewController: UIViewController {
             .addQueryItem(name: "appid", value: appId)
             .build()
         
-        OpenWeatherAPI(url!).request(completion: {(weather) in
+        OpenWeatherAPI(url!).requestCurrentWeather(completion: {(weather) in
             self.weather = weather
             self.tableViewCurrentWeather.reloadData()
         })
@@ -56,7 +56,8 @@ extension CurrentWeatherViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch cellTypes[indexPath.row] {
+        let rowNumber = indexPath.row
+        switch cellTypes[rowNumber] {
         case .CityName:
             let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             

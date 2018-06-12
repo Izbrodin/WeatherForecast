@@ -1,23 +1,19 @@
 //
-//  TimeUpdatedTableViewCell.swift
+//  DayNameCell.swift
 //  WeatherForecast
 //
-//  Created by Admin on 04.06.2018.
+//  Created by Admin on 08.06.2018.
 //  Copyright © 2018 Admin. All rights reserved.
 //
 
 import UIKit
 
-class TimeUpdatedTableViewCell: UITableViewCell {
+class DayNameCell: UITableViewCell {
 
-    @IBOutlet weak private var updatedLabel: UILabel!
-    
-    
-    @IBOutlet weak private var timeUpdated: UILabel!
-    
+    @IBOutlet weak private var dayName: UILabel!
+   
     override func awakeFromNib() {
         super.awakeFromNib()
-        updatedLabel.text = "Обновлено:"
         // Initialization code
     }
 
@@ -26,8 +22,8 @@ class TimeUpdatedTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func update(dateAndTime: String) {
-        timeUpdated.text = dateAndTime
+    func update(name: String) {
+        self.dayName.text = name
     }
+    
 }

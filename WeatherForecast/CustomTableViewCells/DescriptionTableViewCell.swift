@@ -23,8 +23,6 @@ class DescriptionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        weatherDescription.adjustsFontSizeToFitWidth = true
-        temperature.adjustsFontSizeToFitWidth = true
         // Initialization code
     }
 

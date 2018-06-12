@@ -34,6 +34,10 @@
 		849B70CE20CA885B00EA4217 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B70CD20CA885B00EA4217 /* UITableViewExtensions.swift */; };
 		84ABF09A20C7E49500068982 /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ABF09920C7E49500068982 /* CellType.swift */; };
 		84B2461A20CAC559003785E3 /* WeatherForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2461920CAC559003785E3 /* WeatherForecastViewController.swift */; };
+		84B2461C20CAD904003785E3 /* WeatherForecastCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2461B20CAD904003785E3 /* WeatherForecastCellType.swift */; };
+		84B2462020CADCBB003785E3 /* DayNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2461E20CADCBB003785E3 /* DayNameCell.swift */; };
+		84B2462120CADCBB003785E3 /* DayNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2461F20CADCBB003785E3 /* DayNameCell.xib */; };
+		84C233BE20CBE06F00D6BB7F /* WeatherForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C233BD20CBE06F00D6BB7F /* WeatherForecast.swift */; };
 		DD85079D9A74D2F56D91A45A /* Pods_WeatherForecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2DF271361DDBED514B8E2F8 /* Pods_WeatherForecast.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +71,10 @@
 		849B70CD20CA885B00EA4217 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		84ABF09920C7E49500068982 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		84B2461920CAC559003785E3 /* WeatherForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastViewController.swift; sourceTree = "<group>"; };
+		84B2461B20CAD904003785E3 /* WeatherForecastCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastCellType.swift; sourceTree = "<group>"; };
+		84B2461E20CADCBB003785E3 /* DayNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayNameCell.swift; sourceTree = "<group>"; };
+		84B2461F20CADCBB003785E3 /* DayNameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayNameCell.xib; sourceTree = "<group>"; };
+		84C233BD20CBE06F00D6BB7F /* WeatherForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecast.swift; sourceTree = "<group>"; };
 		D05118C6FF6326C55E1C05D2 /* Pods-WeatherForecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecast.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecast/Pods-WeatherForecast.release.xcconfig"; sourceTree = "<group>"; };
 		E1CDD80AE873F76E0692A407 /* Pods-WeatherForecast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecast/Pods-WeatherForecast.debug.xcconfig"; sourceTree = "<group>"; };
 		F2DF271361DDBED514B8E2F8 /* Pods_WeatherForecast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherForecast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +115,7 @@
 		8473B82F20C00DFD00283F6A /* CustomTableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				84B2461D20CADC88003785E3 /* Forecast */,
 				84925D6C20C15F8F00D46DAB /* CityNameTableViewCell.swift */,
 				84925D6D20C15F8F00D46DAB /* CityNameTableViewCell.xib */,
 				84925D7720C168FC00D46DAB /* ParameterTableViewCell.swift */,
@@ -180,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				8423992320B5A722009102CE /* Weather.swift */,
+				84C233BD20CBE06F00D6BB7F /* WeatherForecast.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,8 +200,18 @@
 				84515C9D20B83553008F64A4 /* Forecast.swift */,
 				84ABF09920C7E49500068982 /* CellType.swift */,
 				842CF09520C94F8300B1967B /* SunMode.swift */,
+				84B2461B20CAD904003785E3 /* WeatherForecastCellType.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		84B2461D20CADC88003785E3 /* Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				84B2461E20CADCBB003785E3 /* DayNameCell.swift */,
+				84B2461F20CADCBB003785E3 /* DayNameCell.xib */,
+			);
+			path = Forecast;
 			sourceTree = "<group>";
 		};
 		8BFCF5CF18A05E22EC1FDDA0 /* Frameworks */ = {
@@ -272,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8484849320B45CB80075981C /* LaunchScreen.storyboard in Resources */,
+				84B2462120CADCBB003785E3 /* DayNameCell.xib in Resources */,
 				8484849020B45CB80075981C /* Assets.xcassets in Resources */,
 				84925D8220C16D0800D46DAB /* WindTableViewCell.xib in Resources */,
 				84925D7A20C168FC00D46DAB /* ParameterTableViewCell.xib in Resources */,
@@ -335,10 +356,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				84B2461A20CAC559003785E3 /* WeatherForecastViewController.swift in Sources */,
+				84B2461C20CAD904003785E3 /* WeatherForecastCellType.swift in Sources */,
 				84515C9E20B83553008F64A4 /* Forecast.swift in Sources */,
 				84925D7D20C16AD400D46DAB /* DescriptionTableViewCell.swift in Sources */,
+				84B2462020CADCBB003785E3 /* DayNameCell.swift in Sources */,
 				8423992B20B5AAF3009102CE /* Humidity.swift in Sources */,
 				849B70CE20CA885B00EA4217 /* UITableViewExtensions.swift in Sources */,
+				84C233BE20CBE06F00D6BB7F /* WeatherForecast.swift in Sources */,
 				84925D6E20C15F8F00D46DAB /* CityNameTableViewCell.swift in Sources */,
 				84515C9C20B8347A008F64A4 /* OpenWeatherAPI.swift in Sources */,
 				8414368720BD70ED0079D315 /* URLBuilder.swift in Sources */,
@@ -506,6 +530,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Izbrodin.WeatherForecast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -524,6 +549,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Izbrodin.WeatherForecast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

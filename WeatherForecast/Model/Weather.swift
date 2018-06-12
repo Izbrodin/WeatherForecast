@@ -20,6 +20,7 @@ class Weather: Mappable, CustomStringConvertible {
     var sunriseTime: String?
     var sunsetTime: String?
     var icon: String?
+    var date: String?
 
     required init?(map: Map) {
 
@@ -31,7 +32,9 @@ class Weather: Mappable, CustomStringConvertible {
 
     func mapping(map: Map) {
         cityName <- map["name"]
-        dateAndTime = mapDate(map["dt"])
+        dateAndTime = mapDateAndTime(map["dt"])
+        
+        date = mapDate(map["dt"])
         
         if let temperature = map["main.temp"].currentValue as? Double {
             self.temperature = Temperature(value: temperature)
@@ -58,7 +61,11 @@ class Weather: Mappable, CustomStringConvertible {
     }
 
     fileprivate func mapDate(_ map: Map) -> String {
-        return parseUTCDate(map["dt"], "E, d MMM yyyy HH:mm")
+    return parseUTCDate(map, "E, d MMM yyyy")
+    }
+    
+    fileprivate func mapDateAndTime(_ map: Map) -> String {
+        return parseUTCDate(map["dt"], "E, d MMM yyyy HH:mm") //FIX remove dt
     }
     
     fileprivate func mapTime(_ map: Map) -> String {
