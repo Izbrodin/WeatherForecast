@@ -15,11 +15,11 @@ class WeatherForecastViewController: UIViewController {
     var weatherIndex = 0
     
     var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
+    
+     
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         tableViewWeatherForeCast.register(cellClass: DayNameCell.self)
         tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
@@ -61,8 +61,6 @@ class WeatherForecastViewController: UIViewController {
         */
         OpenWeatherAPI(url!).requestForecastFor5Days(completion: {(forecast) in
             self.weatherForeCast = forecast
-            
-            
             self.tableViewWeatherForeCast.reloadData()
         })
     }
@@ -75,6 +73,10 @@ extension WeatherForecastViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weatherForeCast.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Day name"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -32,9 +32,9 @@ class Weather: Mappable, CustomStringConvertible {
 
     func mapping(map: Map) {
         cityName <- map["name"]
-        dateAndTime = mapDateAndTime(map["dt"])
+        dateAndTime = ObjectMapperDateFormatter.mapDateAndTime(map["dt"])
         
-        date = mapDate(map["dt"])
+        date = ObjectMapperDateFormatter.mapDate(map["dt"])
         
         if let temperature = map["main.temp"].currentValue as? Double {
             self.temperature = Temperature(value: temperature)
@@ -56,37 +56,10 @@ class Weather: Mappable, CustomStringConvertible {
             humidity = Humidity(value: humidityValue)
         }
         
-        sunriseTime = mapTime(map["sys.sunrise"])
-        sunsetTime = mapTime(map["sys.sunset"])
+        sunriseTime =  ObjectMapperDateFormatter.mapTime(map["sys.sunrise"])
+        sunsetTime = ObjectMapperDateFormatter.mapTime(map["sys.sunset"])
     }
 
-    fileprivate func mapDate(_ map: Map) -> String {
-    return parseUTCDate(map, "E, d MMM yyyy")
-    }
-    
-    fileprivate func mapDateAndTime(_ map: Map) -> String {
-        return parseUTCDate(map["dt"], "E, d MMM yyyy HH:mm") //FIX remove dt
-    }
-    
-    fileprivate func mapTime(_ map: Map) -> String {
-        return parseUTCDate(map, "HH:mm")
-    }
-    
-    fileprivate func parseUTCDate(_ map: Map,_ dateFormat: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = dateFormat
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = Locale(identifier: "ru_RU")
-
-        if let dateTimeInterval = map.currentValue as? Double {
-            let dateUTC = Date(timeIntervalSince1970: dateTimeInterval)
-            return formatter.string(from: dateUTC)
-        }
-        else {
-            return "Data wasn't retrieved"
-        }
-    }
-    
     var description: String {
         let descr = dateAndTime! + "\n" +
             "temperature" + temperature!.description + "\n" +
