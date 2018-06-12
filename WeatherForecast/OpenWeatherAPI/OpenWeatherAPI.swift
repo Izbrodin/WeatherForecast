@@ -19,7 +19,8 @@ class OpenWeatherAPI{
     }
     
     func requestCurrentWeather(completion: @escaping (Weather?)->()) {
-        Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
+        /*let backgroundQueue = DispatchQueue(label: "backgroundQueue", qos: .background, attributes: .concurrent)*/
+        Alamofire.request(requestUrl, method: .get).validate().responseJSON/*(queue: backgroundQueue) */{ response in
             switch response.result {
             case .success(let value):
                 let weather = Mapper<Weather>().map(JSONObject: value)

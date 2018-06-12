@@ -20,8 +20,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TR-7K-CE5">
-                        <rect key="frame" x="141" y="8.5" width="94" height="48"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                        <rect key="frame" x="146.5" y="12" width="82.5" height="42"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

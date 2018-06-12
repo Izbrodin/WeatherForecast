@@ -12,12 +12,11 @@ class WeatherForecastViewController: UIViewController {
     @IBOutlet weak var tableViewWeatherForeCast: UITableView!
     
     var weatherForeCast: [Weather] = []
+    let next5DaysNames = DateHelper.getNextFiveDaysNames()
     var weatherIndex = 0
     
     var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
     
-     
-  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,14 +69,25 @@ extension WeatherForecastViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
+   /*
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        /*if weatherForeCast.count > 0 {
+        let dayName = next5DaysNames[section]
+        return WeatherForecast.getCountOfWeatherRecords(in: weatherForeCast, for: dayName)
+        }
+        else {
+            return 1
+        }*/
         return weatherForeCast.count
     }
-    
+ /*
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Day name"
-    }
+        return next5DaysNames[section]
+    }*/
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowNumber = indexPath.row
