@@ -10,13 +10,23 @@ import UIKit
 
 class WeatherForecastViewController: UIViewController {
     @IBOutlet weak var tableViewWeatherForeCast: UITableView!
-    
+    var activityIndicator = UIActivityIndicatorView()
     var weatherForeCast: [Weather] = []
     let next5DaysNames = DateHelper.getNextFiveDaysNames()
     var weatherIndex = 0
-    
     var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
     
+    func startActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +35,7 @@ class WeatherForecastViewController: UIViewController {
         tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
         
+        startActivityIndicator()
         loadForecastFor5Days()
         
         tableViewWeatherForeCast.delegate = self
@@ -47,20 +58,11 @@ class WeatherForecastViewController: UIViewController {
             .addQueryItem(name: "units", value: units)
             .addQueryItem(name: "appid", value: appId)
             .build()
-        /*
-        let testUrl = URLBuilder()
-            .set(scheme: "http")
-            .set(host: "samples.openweathermap.org")
-            .set(path: "data/2.5/forecast")
-            .addQueryItem(name: "q", value: "München,DE")
-            //.addQueryItem(name: "lang", value: languageIndex)
-            //.addQueryItem(name: "units", value: units)
-            .addQueryItem(name: "appid", value: "b6907d289e10d714a6e88b30761fae22")
-            .build()
-        */
+
         OpenWeatherAPI(url!).requestForecastFor5Days(completion: {(forecast) in
             self.weatherForeCast = forecast
             self.tableViewWeatherForeCast.reloadData()
+            self.stopActivityIndicator()
         })
     }
 }
@@ -69,10 +71,6 @@ extension WeatherForecastViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
-   /*
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         /*if weatherForeCast.count > 0 {
@@ -124,11 +122,6 @@ extension WeatherForecastViewController: UITableViewDataSource {
 }
 
 extension WeatherForecastViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        //height for each type of cells
-        return cellTypes[indexPath.row % 5].getHeight()
-    }
+
 }
 

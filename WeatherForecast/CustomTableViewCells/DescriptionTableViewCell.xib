@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7v-9u-1ja">
-                        <rect key="frame" x="161" y="5" width="52.5" height="26.5"/>
+                        <rect key="frame" x="161" y="5" width="52.5" height="25"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -41,6 +41,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="R6v-6F-Ti6" firstAttribute="top" secondItem="u7v-9u-1ja" secondAttribute="bottom" constant="12" id="1xv-Im-fmG"/>
                     <constraint firstItem="R6v-6F-Ti6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EUg-N6-Ce0"/>
                     <constraint firstItem="u7v-9u-1ja" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="L1s-2K-ASR"/>
                     <constraint firstItem="tZU-ga-518" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="L8Y-OW-1JF"/>
@@ -56,7 +57,7 @@
                 <outlet property="weatherDescription" destination="u7v-9u-1ja" id="R3e-O9-WjE"/>
                 <outlet property="weatherImage" destination="tZU-ga-518" id="Qgz-Ls-9Zs"/>
             </connections>
-            <point key="canvasLocation" x="41.5" y="76.5"/>
+            <point key="canvasLocation" x="41.5" y="76"/>
         </tableViewCell>
     </objects>
 </document>

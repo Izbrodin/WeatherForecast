@@ -11,19 +11,17 @@ import UIKit
 class TimeUpdatedTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var updatedLabel: UILabel!
-    
-    
     @IBOutlet weak private var timeUpdated: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         updatedLabel.text = "Обновлено:"
-        // Initialization code
+        updatedLabel.setFontSizeFitWidth()
+        timeUpdated.setFontSizeFitWidth()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     

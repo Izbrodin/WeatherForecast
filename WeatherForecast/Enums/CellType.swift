@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 enum CellType {
     case CityName
@@ -18,17 +17,4 @@ enum CellType {
     case Humidity
     case Sunrise
     case Sunset
-
-    func getHeight() -> CGFloat {
-        switch self {
-        case .CityName: return 75
-        case .TimeUpdated: return 65
-        case .Description: return 120
-        case .Wind: return 150
-        case .Pressure: return 47
-        case .Humidity: return 47
-        case .Sunrise: return 47
-        case .Sunset: return 47
-        }
-    }
 }

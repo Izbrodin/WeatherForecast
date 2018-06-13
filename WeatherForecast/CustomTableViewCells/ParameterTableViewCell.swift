@@ -12,10 +12,12 @@ class ParameterTableViewCell: UITableViewCell {
 
     @IBOutlet var parameterLabel: UILabel!
     @IBOutlet var parameterValue: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        parameterLabel.setFontSizeFitWidth()
+        parameterValue.setFontSizeFitWidth()
     }
 
     func update(pressure: Pressure?) {
@@ -57,7 +59,6 @@ class ParameterTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 }

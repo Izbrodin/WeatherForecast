@@ -24,6 +24,8 @@ class DescriptionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        weatherDescription.setFontSizeFitWidth()
+        temperature.setFontSizeFitWidth()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

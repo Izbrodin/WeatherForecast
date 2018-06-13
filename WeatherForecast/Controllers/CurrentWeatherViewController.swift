@@ -4,11 +4,28 @@ class CurrentWeatherViewController: UIViewController {
     
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
     
+    var activityIndicator = UIActivityIndicatorView()
     var weather: Weather?
     var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
     
+    func startActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let estimatedRowHeight = CGFloat(0.15 * Double(tableViewCurrentWeather.bounds.height))
+        tableViewCurrentWeather.estimatedRowHeight = estimatedRowHeight
+        tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
+        
         tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: DescriptionTableViewCell.self)
@@ -16,10 +33,11 @@ class CurrentWeatherViewController: UIViewController {
         tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
         
-        loadCurrentWeather()
-        
         tableViewCurrentWeather.delegate = self
         tableViewCurrentWeather.dataSource = self
+        
+        startActivityIndicator()
+        loadCurrentWeather()
     }
     
     func loadCurrentWeather() {
@@ -41,6 +59,7 @@ class CurrentWeatherViewController: UIViewController {
         
         OpenWeatherAPI(url!).requestCurrentWeather(completion: {(weather) in
             self.weather = weather
+            self.stopActivityIndicator()
             self.tableViewCurrentWeather.reloadData()
         })
     }
@@ -101,10 +120,5 @@ extension CurrentWeatherViewController: UITableViewDataSource {
 }
 
     extension CurrentWeatherViewController: UITableViewDelegate {
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-        {
-            //height for each type of cells
-            return cellTypes[indexPath.row].getHeight()
-        }
  
 }
