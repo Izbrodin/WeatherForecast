@@ -21,6 +21,7 @@ class Weather: Mappable, CustomStringConvertible {
     var sunsetTime: String?
     var icon: String?
     var date: String?
+    var time: String?
 
     required init?(map: Map) {
 
@@ -35,6 +36,7 @@ class Weather: Mappable, CustomStringConvertible {
         dateAndTime = ObjectMapperDateFormatter.mapDateAndTime(map["dt"])
         
         date = ObjectMapperDateFormatter.mapDate(map["dt"])
+        time = ObjectMapperDateFormatter.mapTime(map["dt"])
         
         if let temperature = map["main.temp"].currentValue as? Double {
             self.temperature = Temperature(value: temperature)

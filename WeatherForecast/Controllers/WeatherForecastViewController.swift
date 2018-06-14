@@ -11,10 +11,10 @@ import UIKit
 class WeatherForecastViewController: UIViewController {
     @IBOutlet weak var tableViewWeatherForeCast: UITableView!
     var activityIndicator = UIActivityIndicatorView()
-    var weatherForeCast: [Weather] = []
-    let next5DaysNames = DateHelper.getNextFiveDaysNames()
     var weatherIndex = 0
     var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
+    
+    var tableData: [SectionData] = []
     
     func startActivityIndicator() {
         activityIndicator.center = self.view.center
@@ -30,7 +30,7 @@ class WeatherForecastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableViewWeatherForeCast.register(cellClass: DayNameCell.self)
+        tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
         tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
@@ -60,43 +60,56 @@ class WeatherForecastViewController: UIViewController {
             .build()
 
         OpenWeatherAPI(url!).requestForecastFor5Days(completion: {(forecast) in
-            self.weatherForeCast = forecast
+            self.constructTableViewSections(forecast)
             self.tableViewWeatherForeCast.reloadData()
             self.stopActivityIndicator()
         })
     }
 }
+    
+extension WeatherForecastViewController {
+    func constructTableViewSections(_ weatherForecast: WeatherForecast?) {
+        let sortedWeatherList: [[Weather]] = (weatherForecast?.sortByDays())!
+        let next5DaysNames = DateHelper.getNextFiveDaysNames()
+        let daysRange = 0..<cellTypes.count
+        for day in daysRange {
+            let dayName = next5DaysNames[day]
+            let weatherList = sortedWeatherList[day]
+            let sectionData = SectionData(title: dayName, weatherList: weatherList)
+            tableData.append(sectionData)
+            }
+        }
+}
 
 extension WeatherForecastViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return tableData.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*if weatherForeCast.count > 0 {
-        let dayName = next5DaysNames[section]
-        return WeatherForecast.getCountOfWeatherRecords(in: weatherForeCast, for: dayName)
-        }
-        else {
-            return 1
-        }*/
-        return weatherForeCast.count
+        let numberOfRowsInSection = tableData[section].count * cellTypes.count
+        return numberOfRowsInSection
     }
- /*
+ 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return next5DaysNames[section]
-    }*/
+        return tableData[section].title
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = indexPath.section
         let rowNumber = indexPath.row
-        let weather = weatherForeCast[weatherIndex]
-        let cellTypeIndex = rowNumber % 5
+        let weather = tableData[section][weatherIndex]
+        let cellTypeIndex = rowNumber % cellTypes.count
+        
+        if cellTypeIndex == cellTypes.count - 1 {
+            weatherIndex = weatherIndex + 1
+        }
+        
         switch cellTypes[cellTypeIndex] {
             case .DayName:
-                let cell: DayNameCell = tableView.dequeueReusableCell(for: indexPath)
-                
-                if let dayName = weather.dateAndTime {
-                    cell.update(name: dayName)
+                let cell: WeatherTimeCell = tableView.dequeueReusableCell(for: indexPath)
+                if let weatherTime = weather.time {
+                    cell.update(time: weatherTime)
                 }
                 return cell
             case .Description:
@@ -114,10 +127,13 @@ extension WeatherForecastViewController: UITableViewDataSource {
             case .Humidity:
                 let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.update(humidity: weather.humidity)
-                weatherIndex = weatherIndex + 1
                 return cell
             }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        weatherIndex = 0
     }
 }
 

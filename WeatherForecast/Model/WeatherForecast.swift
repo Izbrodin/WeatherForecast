@@ -30,3 +30,21 @@ class WeatherForecast: Mappable {
         return count
     }
 }
+
+extension WeatherForecast {
+    func sortByDays() -> [[Weather]] {
+        var weatherByDates: [[Weather]] = []
+        var weatherForDate: [Weather] = []
+        var currentDate = list[0].date
+        for weather in list {
+            if weather.date != currentDate {
+                currentDate = weather.date
+                weatherByDates.append(weatherForDate)
+                weatherForDate = []
+            }
+            weatherForDate.append(weather)
+        }
+        return weatherByDates
+    }
+}
+

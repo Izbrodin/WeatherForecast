@@ -1,5 +1,5 @@
 //
-//  DayNameCell.swift
+//  WeatherTimeCell.swift
 //  WeatherForecast
 //
 //  Created by Admin on 08.06.2018.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DayNameCell: UITableViewCell {
+class WeatherTimeCell: UITableViewCell {
 
-    @IBOutlet weak private var dayName: UILabel!
+    @IBOutlet weak private var time: UILabel!
    
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,11 +19,12 @@ class DayNameCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        dayName.setFontSizeFitWidth()
+        time.setFontSizeFitWidth()
         // Configure the view for the selected state
     }
-    func update(name: String) {
-        self.dayName.text = name
+    
+    func update(time: String) {
+        self.time.text = time
     }
     
 }
