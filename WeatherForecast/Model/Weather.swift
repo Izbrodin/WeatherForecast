@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Weather: Mappable, CustomStringConvertible {
+class Weather: Mappable {
     var cityName: String?
     var dateAndTime: String?
     var temperature: Temperature?
@@ -61,7 +61,9 @@ class Weather: Mappable, CustomStringConvertible {
         sunriseTime =  ObjectMapperDateFormatter.mapTime(map["sys.sunrise"])
         sunsetTime = ObjectMapperDateFormatter.mapTime(map["sys.sunset"])
     }
+}
 
+extension Weather: CustomStringConvertible {
     var description: String {
         let descr = dateAndTime! + "\n" +
             "temperature" + temperature!.description + "\n" +

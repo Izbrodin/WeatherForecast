@@ -3,7 +3,6 @@ import UIKit
 class CurrentWeatherViewController: UIViewController {
     
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
-    
     var activityIndicator = UIActivityIndicatorView()
     var weather: Weather?
     var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
@@ -119,6 +118,6 @@ extension CurrentWeatherViewController: UITableViewDataSource {
     }
 }
 
-    extension CurrentWeatherViewController: UITableViewDelegate {
+extension CurrentWeatherViewController: UITableViewDelegate {
  
 }

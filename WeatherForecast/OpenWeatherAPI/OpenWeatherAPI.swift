@@ -18,7 +18,7 @@ class OpenWeatherAPI{
        requestUrl = url.absoluteString
     }
     
-    func requestCurrentWeather(completion: @escaping (Weather?)->()) {
+    func requestCurrentWeather(completion: @escaping (Weather?)->()) {//TO DELETE
         /*let backgroundQueue = DispatchQueue(label: "backgroundQueue", qos: .background, attributes: .concurrent)*/
         Alamofire.request(requestUrl, method: .get).validate().responseJSON/*(queue: backgroundQueue) */{ response in
             switch response.result {

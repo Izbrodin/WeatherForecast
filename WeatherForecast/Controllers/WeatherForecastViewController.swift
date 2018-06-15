@@ -11,24 +11,21 @@ import UIKit
 class WeatherForecastViewController: UIViewController {
     @IBOutlet weak var tableViewWeatherForeCast: UITableView!
     var activityIndicator = UIActivityIndicatorView()
-    var weatherIndex = 0
+    
+    //Cell types which will be displayed in tableView
     var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
     
+    //Weather object index in a
+    var weatherIndex = 0
+    var cellTypeLastIndex: Int = 0
+    
+    //Data for each table section
     var tableData: [SectionData] = []
     
-    func startActivityIndicator() {
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = .gray
-        self.view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-    }
-    
-    func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        //last index of cellTypes array
+        cellTypeLastIndex = cellTypes.count - 1
         
         tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
         tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
@@ -66,20 +63,6 @@ class WeatherForecastViewController: UIViewController {
         })
     }
 }
-    
-extension WeatherForecastViewController {
-    func constructTableViewSections(_ weatherForecast: WeatherForecast?) {
-        let sortedWeatherList: [[Weather]] = (weatherForecast?.sortByDays())!
-        let next5DaysNames = DateHelper.getNextFiveDaysNames()
-        let daysRange = 0..<cellTypes.count
-        for day in daysRange {
-            let dayName = next5DaysNames[day]
-            let weatherList = sortedWeatherList[day]
-            let sectionData = SectionData(title: dayName, weatherList: weatherList)
-            tableData.append(sectionData)
-            }
-        }
-}
 
 extension WeatherForecastViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,7 +84,7 @@ extension WeatherForecastViewController: UITableViewDataSource {
         let weather = tableData[section][weatherIndex]
         let cellTypeIndex = rowNumber % cellTypes.count
         
-        if cellTypeIndex == cellTypes.count - 1 {
+        if cellTypeIndex == cellTypeLastIndex {
             weatherIndex = weatherIndex + 1
         }
         
@@ -139,5 +122,33 @@ extension WeatherForecastViewController: UITableViewDataSource {
 
 extension WeatherForecastViewController: UITableViewDelegate {
 
+}
+
+extension WeatherForecastViewController {
+    func constructTableViewSections(_ weatherForecast: WeatherForecast?) {
+        let sortedWeatherList: [[Weather]] = (weatherForecast?.sortByDays())!
+        let next5DaysNames = DateHelper.getNextFiveDaysNames()
+        let daysRange = 0..<cellTypes.count
+        for day in daysRange {
+            let dayName = next5DaysNames[day]
+            let weatherList = sortedWeatherList[day]
+            let sectionData = SectionData(title: dayName, weatherList: weatherList)
+            tableData.append(sectionData)
+        }
+    }
+}
+
+extension WeatherForecastViewController {
+    func startActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
 }
 

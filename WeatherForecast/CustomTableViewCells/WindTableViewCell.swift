@@ -38,10 +38,12 @@ class WindTableViewCell: UITableViewCell {
         
         windHeader.setFontSizeFitWidth()
         
+        //set font size for wind direction image labels
         for label in compassLabelsGroup {
             label.font = label.font.withSize(size1)
         }
         
+        //set font size for wind and speed labels
         for label in directionAndSpeedLabelsGroup {
             label.setFontSizeFitWidth()
         }
