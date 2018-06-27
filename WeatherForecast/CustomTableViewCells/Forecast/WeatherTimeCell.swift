@@ -26,5 +26,4 @@ class WeatherTimeCell: UITableViewCell {
     func update(time: String) {
         self.time.text = time
     }
-    
 }

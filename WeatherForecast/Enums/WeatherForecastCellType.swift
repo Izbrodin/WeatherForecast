@@ -8,7 +8,7 @@
 
 import Foundation
 enum WeatherForecastCellType {
-    case DayName
+    case Time
     case Description
     case Wind
     case Pressure

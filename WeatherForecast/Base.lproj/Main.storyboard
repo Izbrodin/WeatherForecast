@@ -11,23 +11,43 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Swipeable Tab Bar Controller-->
         <scene sceneID="Qxh-Y8-Y2j">
             <objects>
-                <tabBarController id="P9O-9z-2eC" sceneMemberID="viewController">
+                <tabBarController id="P9O-9z-2eC" customClass="SwipeableTabBarController" customModule="SwipeableTabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JBX-Je-cO8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="mmc-c2-SxQ" kind="relationship" relationship="viewControllers" id="b2g-sb-AYN"/>
-                        <segue destination="YPd-GA-J2T" kind="relationship" relationship="viewControllers" id="FyZ-Qb-iNa"/>
+                        <segue destination="Zn0-cA-e0m" kind="relationship" relationship="viewControllers" id="3ci-Rn-e1M"/>
+                        <segue destination="mmc-c2-SxQ" kind="relationship" relationship="viewControllers" id="Hb8-wc-gmE"/>
+                        <segue destination="YPd-GA-J2T" kind="relationship" relationship="viewControllers" id="LMb-Ot-D3s"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7J-Ba-3Gq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-998" y="-181"/>
+        </scene>
+        <!--Выбрать город-->
+        <scene sceneID="aP4-xe-PIb">
+            <objects>
+                <viewController id="Zn0-cA-e0m" customClass="StartScreenController" customModule="WeatherForecast" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HaT-0K-U0W">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="x2m-3T-XeP"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Выбрать город" id="fzS-ql-eJK"/>
+                    <connections>
+                        <segue destination="mmc-c2-SxQ" kind="show" identifier="segueToCurrentWeather" id="t5B-pS-aHN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vqh-xq-MFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-206" y="-612"/>
         </scene>
         <!--Погода сейчас-->
         <scene sceneID="qfh-de-tfJ">
@@ -58,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSb-9v-zyG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-130.40000000000001" y="-181.25937031484258"/>
+            <point key="canvasLocation" x="-225" y="181"/>
         </scene>
         <!--Прогноз погоды-->
         <scene sceneID="M29-V9-Rdg">
@@ -93,12 +113,16 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Прогноз погоды" id="LSL-5a-yAc"/>
                     <connections>
+                        <outlet property="cityNameLabel" destination="0br-rg-WQl" id="4Ut-gV-mQe"/>
                         <outlet property="tableViewWeatherForeCast" destination="WcN-kd-u91" id="q6n-W8-CTI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dqq-R3-ghZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-130.43478260869566" y="538.85869565217399"/>
+            <point key="canvasLocation" x="-999" y="605"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Hb8-wc-gmE"/>
+    </inferredMetricsTieBreakers>
 </document>

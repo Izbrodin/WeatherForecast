@@ -4,20 +4,10 @@ class CurrentWeatherViewController: UIViewController {
     
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
     var activityIndicator = UIActivityIndicatorView()
+    
+    var city: String!
     var weather: Weather?
     var cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
-    
-    func startActivityIndicator() {
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = .gray
-        self.view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-    }
-    
-    func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +30,6 @@ class CurrentWeatherViewController: UIViewController {
     }
     
     func loadCurrentWeather() {
-        let city = "Penza"
-        let countryIndex = "ru"
         let languageIndex = "ru"
         let units = "metric"
         let appId = "04fe9bc8bdd23ab05caa33af5b162552"
@@ -50,7 +38,7 @@ class CurrentWeatherViewController: UIViewController {
             .set(scheme: "http")
             .set(host: "api.openweathermap.org")
             .set(path: "data/2.5/weather")
-            .addQueryItem(name: "q", value: city + "," + countryIndex)
+            .addQueryItem(name: "q", value: self.city)
             .addQueryItem(name: "lang", value: languageIndex)
             .addQueryItem(name: "units", value: units)
             .addQueryItem(name: "appid", value: appId)
@@ -78,7 +66,6 @@ extension CurrentWeatherViewController: UITableViewDataSource {
         switch cellTypes[rowNumber] {
         case .CityName:
             let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            
             if let city = weather?.cityName {
             cell.updateCity(name: city)
             }
@@ -120,4 +107,26 @@ extension CurrentWeatherViewController: UITableViewDataSource {
 
 extension CurrentWeatherViewController: UITableViewDelegate {
  
+}
+
+extension CurrentWeatherViewController {
+    func startActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        activityIndicator.color = UIColor.blue
+
+        DispatchQueue.main.async {
+            self.activityIndicator.center = self.view.center
+            self.view.addSubview(self.activityIndicator)
+            self.activityIndicator.startAnimating()
+        }
+        
+    }
+    
+    func stopActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
+    }
 }

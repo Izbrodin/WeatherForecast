@@ -8,39 +8,54 @@
 
 import UIKit
 
-class WeatherForecastViewController: UIViewController {
+class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDelegate {
+
+    @IBOutlet weak var cityNameLabel: UILabel!
+    
     @IBOutlet weak var tableViewWeatherForeCast: UITableView!
     var activityIndicator = UIActivityIndicatorView()
     
-    //Cell types which will be displayed in tableView
-    var cellTypes = [WeatherForecastCellType.DayName, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
+    var city: String!
     
-    //Weather object index in a
+    //Cell types which will be displayed in tableView
+    var cellTypes = [WeatherForecastCellType.Time, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
+    
+    //Weather object index in a SectionData array
     var weatherIndex = 0
     var cellTypeLastIndex: Int = 0
     
     //Data for each table section
     var tableData: [SectionData] = []
+    var rowsRangesForEachDay: [CountableRange<Int>] = []
+    var estimatedRowHeight: CGFloat = 120
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //last index of cellTypes array
         cellTypeLastIndex = cellTypes.count - 1
+        //calculation of estimated row height
+        estimatedRowHeight = CGFloat(0.15 * Double(tableViewWeatherForeCast.bounds.height))
+        //set estimated row height
+        tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
+        //set automatoc dimension of row height
+        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
         
+        //register all types of custom cells
         tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
         tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
         
+        //set current view controller class as delegate
+        tableViewWeatherForeCast.delegate = self
+        //set current view controller class as datasource
+        tableViewWeatherForeCast.dataSource = self
+        
         startActivityIndicator()
         loadForecastFor5Days()
-        
-        tableViewWeatherForeCast.delegate = self
-        tableViewWeatherForeCast.dataSource = self
     }
     
     func loadForecastFor5Days() {
-        let city = "Penza"
         let countryIndex = "ru"
         let languageIndex = "ru"
         let units = "metric"
@@ -50,7 +65,7 @@ class WeatherForecastViewController: UIViewController {
             .set(scheme: "http")
             .set(host: "api.openweathermap.org")
             .set(path: "data/2.5/forecast")
-            .addQueryItem(name: "q", value: city + "," + countryIndex)
+            .addQueryItem(name: "q", value: self.city)
             .addQueryItem(name: "lang", value: languageIndex)
             .addQueryItem(name: "units", value: units)
             .addQueryItem(name: "appid", value: appId)
@@ -70,7 +85,7 @@ extension WeatherForecastViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRowsInSection = tableData[section].count * cellTypes.count
+        let numberOfRowsInSection = tableData[section].expanded ? tableData[section].count * cellTypes.count : 0
         return numberOfRowsInSection
     }
  
@@ -81,15 +96,16 @@ extension WeatherForecastViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let rowNumber = indexPath.row
+
+        let rowNumberDividedByCellTypes = Int(rowNumber / cellTypes.count)
+
+        weatherIndex = rowNumberDividedByCellTypes
+        
         let weather = tableData[section][weatherIndex]
         let cellTypeIndex = rowNumber % cellTypes.count
         
-        if cellTypeIndex == cellTypeLastIndex {
-            weatherIndex = weatherIndex + 1
-        }
-        
         switch cellTypes[cellTypeIndex] {
-            case .DayName:
+            case .Time:
                 let cell: WeatherTimeCell = tableView.dequeueReusableCell(for: indexPath)
                 if let weatherTime = weather.time {
                     cell.update(time: weatherTime)
@@ -115,8 +131,37 @@ extension WeatherForecastViewController: UITableViewDataSource {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        weatherIndex = 0
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return estimatedRowHeight * 1.5
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableData[indexPath.section].expanded ? UITableViewAutomaticDimension : 0
+    }
+ 
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.05 * estimatedRowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ExpandableHeaderView()
+        let sectionTitle = tableData[section].title
+        header.customInit(title: sectionTitle, section: section, delegate: self)
+        return header
+    }
+    
+    func toggleSection(header: ExpandableHeaderView, section: Int) {
+        tableData[section].expanded = !tableData[section].expanded
+
+        if tableData[section].expanded {
+        tableViewWeatherForeCast.beginUpdates()
+        tableViewWeatherForeCast.reloadSections(IndexSet(integer: section), with: .automatic)
+        tableViewWeatherForeCast.endUpdates()
+        }
+        
+        DispatchQueue.main.async {
+            self.tableViewWeatherForeCast.reloadData()
+        }
     }
 }
 
@@ -132,7 +177,7 @@ extension WeatherForecastViewController {
         for day in daysRange {
             let dayName = next5DaysNames[day]
             let weatherList = sortedWeatherList[day]
-            let sectionData = SectionData(title: dayName, weatherList: weatherList)
+            let sectionData = SectionData(title: dayName, weatherList: weatherList, expanded: false)
             tableData.append(sectionData)
         }
     }
@@ -140,15 +185,22 @@ extension WeatherForecastViewController {
 
 extension WeatherForecastViewController {
     func startActivityIndicator() {
-        activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = .gray
-        self.view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
+        activityIndicator.color = UIColor.blue
+        
+        DispatchQueue.main.async {
+            self.activityIndicator.center = self.view.center
+            self.view.addSubview(self.activityIndicator)
+            self.activityIndicator.startAnimating()
+        }
     }
     
     func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
 }
 
