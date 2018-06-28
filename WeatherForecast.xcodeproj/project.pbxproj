@@ -197,8 +197,7 @@
 				8437D21E20D138FA00EBA506 /* UILabelExtensions.swift */,
 				8447ECC220E4FAA000190AE6 /* UIViewControllerExtensions.swift */,
 			);
-			name = Extensions;
-			path = ../../PracticeExamples/PracticeExamples/Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		84ABF09620C7D80900068982 /* Controllers */ = {
