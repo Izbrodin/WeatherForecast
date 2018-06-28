@@ -11,6 +11,7 @@ import UIKit
 
 class StartScreenController: UIViewController {
     private var city: String?
+    private var cityWasSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,36 +36,32 @@ class StartScreenController: UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
             if let textField = alert.textFields?.first {
                 self.city = textField.text
-                
+            
                 if let currentWeatherViewController = self.tabBarController?.viewControllers![1] as? CurrentWeatherViewController {
                     currentWeatherViewController.city = self.city
+                    self.cityWasSelected = true
                 }
                 
-                if let weatherForecastViewController = self.tabBarController?.viewControllers![2] as? WeatherForecastViewController{
+                if let weatherForecastViewController = self.tabBarController?.viewControllers![2] as? WeatherForecastViewController {
                     weatherForecastViewController.city = self.city
                 }
-
-                self.tabBarController?.selectedIndex = 1
+                self.selectTabWithIndex(1)
             }
         })
 
+        if cityWasSelected {
         let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: {_ in
-         self.tabBarController?.selectedIndex = 1
+         self.selectTabWithIndex(1)
         })
          alert.addAction(cancel)
+        }
         
         alert.addAction(okAction)
-
         self.present(alert, animated: true, completion: nil)
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "segueToCurrentWeather") {
-            
-            if let secTab = self.tabBarController?.viewControllers![1] as? CurrentWeatherViewController {
-                secTab.city = self.city
-            }
-        }
+    func selectTabWithIndex(_ tabIndex: Int) {
+        self.tabBarController?.selectedIndex = tabIndex
     }
 }

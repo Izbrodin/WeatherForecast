@@ -11,20 +11,21 @@ class CurrentWeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let estimatedRowHeight = CGFloat(0.15 * Double(tableViewCurrentWeather.bounds.height))
-        tableViewCurrentWeather.estimatedRowHeight = estimatedRowHeight
-        tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
+        configureRowHeight()
         
-        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: DescriptionTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: WindTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
+        registerCells()
         
         tableViewCurrentWeather.delegate = self
         tableViewCurrentWeather.dataSource = self
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //hide tableview until data received
+        self.tableViewCurrentWeather.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         startActivityIndicator()
         loadCurrentWeather()
     }
@@ -44,10 +45,16 @@ class CurrentWeatherViewController: UIViewController {
             .addQueryItem(name: "appid", value: appId)
             .build()
         
-        OpenWeatherAPI(url!).requestCurrentWeather(completion: {(weather) in
+        OpenWeatherAPI(url!).requestCurrentWeather(completion: {(weather, error) in
+            if let receivedError = error {
+                self.displayErrorAlert(receivedError.localizedDescription)
+            }
+            else {
             self.weather = weather
             self.stopActivityIndicator()
+            self.tableViewCurrentWeather.isHidden = false
             self.tableViewCurrentWeather.reloadData()
+            }
         })
     }
 }
@@ -128,5 +135,20 @@ extension CurrentWeatherViewController {
             self.activityIndicator.stopAnimating()
             self.activityIndicator.removeFromSuperview()
         }
+    }
+    
+    func configureRowHeight() {
+        let estimatedRowHeight = CGFloat(0.15 * Double(tableViewCurrentWeather.bounds.height))
+        tableViewCurrentWeather.estimatedRowHeight = estimatedRowHeight
+        tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func registerCells() {
+        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: DescriptionTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: WindTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
+        tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
     }
 }

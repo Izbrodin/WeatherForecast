@@ -18,30 +18,27 @@ class OpenWeatherAPI{
        requestUrl = url.absoluteString
     }
     
-    func requestCurrentWeather(completion: @escaping (Weather?)->()) {//TO DELETE
-        /*let backgroundQueue = DispatchQueue(label: "backgroundQueue", qos: .background, attributes: .concurrent)*/
-        Alamofire.request(requestUrl, method: .get).validate().responseJSON/*(queue: backgroundQueue) */{ response in
+    func requestCurrentWeather(completion: @escaping (Weather?, Error?)->()) {
+        Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
                 let weather = Mapper<Weather>().map(JSONObject: value)
-                completion(weather)
+                completion(weather, nil)
             case .failure(let error):
-                completion(nil)
-                print(error)
+                completion(nil, error)
             }
         }
     }
     
-    func requestForecastFor5Days(completion: @escaping (WeatherForecast?)->()){
+    func requestForecastFor5Days(completion: @escaping (WeatherForecast?, Error?)->()){
         Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
                 if let weatherForecast = Mapper<WeatherForecast>().map(JSONObject: value) {
-                    completion(weatherForecast)
+                    completion(weatherForecast, nil)
                 }
             case .failure(let error):
-                completion(nil)
-                print(error)
+                completion(nil, error)
             }
         }
     }

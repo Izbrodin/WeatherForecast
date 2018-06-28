@@ -26,37 +26,38 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
     
     //Data for each table section
     var tableData: [SectionData] = []
-    var rowsRangesForEachDay: [CountableRange<Int>] = []
     var estimatedRowHeight: CGFloat = 120
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //last index of cellTypes array
         cellTypeLastIndex = cellTypes.count - 1
-        //calculation of estimated row height
-        estimatedRowHeight = CGFloat(0.15 * Double(tableViewWeatherForeCast.bounds.height))
-        //set estimated row height
-        tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
-        //set automatoc dimension of row height
-        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
         
-        //register all types of custom cells
-        tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
-        tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
-        tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
-        tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
+        configureRowHeight()
+        
+        registerCells()
         
         //set current view controller class as delegate
         tableViewWeatherForeCast.delegate = self
         //set current view controller class as datasource
         tableViewWeatherForeCast.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //hide city name label
+        self.cityNameLabel.isHidden = true
+        //hide tableview until data received
+        self.tableViewWeatherForeCast.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         startActivityIndicator()
         loadForecastFor5Days()
     }
     
     func loadForecastFor5Days() {
-        let countryIndex = "ru"
         let languageIndex = "ru"
         let units = "metric"
         let appId = "04fe9bc8bdd23ab05caa33af5b162552"
@@ -71,10 +72,18 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
             .addQueryItem(name: "appid", value: appId)
             .build()
 
-        OpenWeatherAPI(url!).requestForecastFor5Days(completion: {(forecast) in
+        OpenWeatherAPI(url!).requestForecastFor5Days(completion: {(forecast, error) in
+            if let receivedError = error {
+                self.displayErrorAlert(receivedError.localizedDescription)
+            }
+            else {
+            self.cityNameLabel.text = self.city
             self.constructTableViewSections(forecast)
+            self.tableViewWeatherForeCast.isHidden = false
+            self.cityNameLabel.isHidden = false
             self.tableViewWeatherForeCast.reloadData()
             self.stopActivityIndicator()
+            }
         })
     }
 }
@@ -132,7 +141,8 @@ extension WeatherForecastViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return estimatedRowHeight * 1.5
+        
+        return CGFloat(self.view.frame.size.height / 5)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -201,6 +211,23 @@ extension WeatherForecastViewController {
             self.activityIndicator.stopAnimating()
             self.activityIndicator.removeFromSuperview()
         }
+    }
+    
+    func configureRowHeight() {
+        //calculation of estimated row height
+        let estimatedRowHeight = CGFloat(0.15 * Double(tableViewWeatherForeCast.bounds.height))
+        //set estimated row height
+        tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
+        //set automatic dimension of row height
+        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func registerCells() {
+        //register all types of custom cells
+        tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
+        tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
+        tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
+        tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
     }
 }
 
