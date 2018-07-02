@@ -10,13 +10,8 @@ import Foundation
 import UIKit
 
 class StartScreenController: UIViewController {
-    private var city: String?
-    private var cityWasSelected = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
+    private var cityWasSelected = false
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -28,37 +23,37 @@ class StartScreenController: UIViewController {
         let alertMessage = "Введите название города"
         let alertTextFieldPlaceholder = "Название города"
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        let defaultCityName = "Penza"
         
-        alert.addTextField {(textField) -> Void in
+        alert.addTextField() { (textField) -> Void in
+            textField.text = defaultCityName
             textField.placeholder = alertTextFieldPlaceholder
         }
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
             if let textField = alert.textFields?.first {
-                self.city = textField.text
-            
-                if let currentWeatherViewController = self.tabBarController?.viewControllers![1] as? CurrentWeatherViewController {
-                    currentWeatherViewController.city = self.city
-                    self.cityWasSelected = true
-                }
-                
-                if let weatherForecastViewController = self.tabBarController?.viewControllers![2] as? WeatherForecastViewController {
-                    weatherForecastViewController.city = self.city
-                }
+                 let city = textField.text!
+                if !city.isEmpty {
+                CityManager.city.name = city
+                self.cityWasSelected = true
                 self.selectTabWithIndex(1)
+                } else {
+                    self.displayAlert()
+                }
             }
         })
 
+        //Add "Cancel" button if city was selected
         if cityWasSelected {
-        let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: {_ in
-         self.selectTabWithIndex(1)
-        })
-         alert.addAction(cancel)
+            let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { _ in
+                self.selectTabWithIndex(1)
+            })
+            alert.addAction(cancel)
         }
         
         alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
         
+        self.present(alert, animated: true, completion: nil)
     }
     
     func selectTabWithIndex(_ tabIndex: Int) {

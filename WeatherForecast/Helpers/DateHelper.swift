@@ -11,7 +11,7 @@ import Foundation
 class DateHelper {
     
     static func getNextFiveDaysNames() -> [String] {
-    let daysRange = 0..<5
+        let daysRange = 0..<5
         var dates: [String] = []
         let currentDate = Date()
         let calendar = Calendar(identifier: .gregorian)

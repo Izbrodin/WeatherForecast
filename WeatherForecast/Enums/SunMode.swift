@@ -9,6 +9,6 @@
 import Foundation
 
 enum SunMode {
-case sunrise
-case sunset
+    case sunrise
+    case sunset
 }

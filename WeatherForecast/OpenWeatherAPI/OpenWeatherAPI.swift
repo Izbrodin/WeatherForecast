@@ -10,15 +10,15 @@ import Foundation
 import Alamofire
 import ObjectMapper
 
-class OpenWeatherAPI{
+class OpenWeatherAPI {
     
-    let requestUrl: String
+    let requestUrl: URL
     
     init(_ url: URL) {
-       requestUrl = url.absoluteString
+       requestUrl = url
     }
     
-    func requestCurrentWeather(completion: @escaping (Weather?, Error?)->()) {
+    func requestCurrentWeather(completion: @escaping (Weather?, Error?) -> ()) {
         Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -30,7 +30,7 @@ class OpenWeatherAPI{
         }
     }
     
-    func requestForecastFor5Days(completion: @escaping (WeatherForecast?, Error?)->()){
+    func requestForecastFor5Days(completion: @escaping (WeatherForecast?, Error?) -> ()){
         Alamofire.request(requestUrl, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):

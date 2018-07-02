@@ -11,7 +11,7 @@ import Foundation
 struct SectionData {
     let title: String
     let weatherList: [Weather]
-    var expanded: Bool!
+    var expanded: Bool
     
     var count: Int {
         return weatherList.count

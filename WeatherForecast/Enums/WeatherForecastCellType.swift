@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 enum WeatherForecastCellType {
     case Time
     case Description

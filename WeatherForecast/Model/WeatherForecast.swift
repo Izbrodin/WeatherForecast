@@ -25,7 +25,12 @@ extension WeatherForecast {
     func sortByDays() -> [[Weather]] {
         var weatherByDates: [[Weather]] = []
         var weatherForDate: [Weather] = []
-        var currentDate = list[0].date
+        var currentDate: String? = nil
+        
+        if let currDateFromAPI = list[0].date {
+            currentDate = currDateFromAPI
+        }
+        
         for weather in list {
             if weather.date != currentDate {
                 currentDate = weather.date

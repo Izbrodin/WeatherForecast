@@ -40,7 +40,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="x2m-3T-XeP"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Выбрать город" id="fzS-ql-eJK"/>
+                    <tabBarItem key="tabBarItem" title="Выбрать город" image="search" id="fzS-ql-eJK"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vqh-xq-MFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,4 +119,7 @@
             <point key="canvasLocation" x="-999" y="605"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="search" width="30" height="30"/>
+    </resources>
 </document>

@@ -22,7 +22,7 @@ class ObjectMapperDateFormatter {
         return parseUTCDate(map, "HH:mm")
     }
     
-    static func parseUTCDate(_ map: Map,_ dateFormat: String) -> String {
+    static func parseUTCDate(_ map: Map, _ dateFormat: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
         formatter.calendar = Calendar(identifier: .gregorian)
