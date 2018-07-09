@@ -11,16 +11,17 @@ import ObjectMapper
 
 class Weather: Mappable {
     var cityName: String?
-    var dateAndTime: String?
-    var temperature: Temperature?
+    var dateAndTime: Date?
+    var temperature: Double?
     var conditions: String?
-    var wind: Wind?
-    var pressure: Pressure?
-    var humidity: Humidity?
-    var sunriseTime: String?
-    var sunsetTime: String?
+    var windDegrees: Double?
+    var windSpeed: Double?
+    var pressure: Double?
+    var humidity: Double?
+    var sunriseTime: Date?
+    var sunsetTime: Date?
     var icon: String?
-    var date: String?
+    var date: Date?
     var time: String?
 
     required init?(map: Map) {
@@ -33,46 +34,66 @@ class Weather: Mappable {
 
     func mapping(map: Map) {
         cityName <- map["name"]
-        dateAndTime = ObjectMapperDateFormatter.mapDateAndTime(map["dt"])
-        
-        date = ObjectMapperDateFormatter.mapDate(map["dt"])
-        time = ObjectMapperDateFormatter.mapTime(map["dt"])
-        
-        if let temperature = map["main.temp"].currentValue as? Double {
-            self.temperature = Temperature(value: temperature)
-        }
-        
+        date <- (map["dt"], DateTransform())
+        temperature <- map["main.temp"]
         conditions <- map["weather.0.description"]
         icon <- map["weather.0.icon"]
-        
-        let windDegrees = map["wind.deg"].currentValue as? Double
-        let windSpeed = map["wind.speed"].currentValue as? Double
-        
-        wind = Wind(degrees: windDegrees!, speed: windSpeed!)
-        
-        if let pressureValue = map["main.pressure"].currentValue as? Double {
-            pressure = Pressure(value: pressureValue)
-        }
-        
-        if let humidityValue = map["main.humidity"].currentValue as? Double {
-            humidity = Humidity(value: humidityValue)
-        }
-        
-        sunriseTime =  ObjectMapperDateFormatter.mapTime(map["sys.sunrise"])
-        sunsetTime = ObjectMapperDateFormatter.mapTime(map["sys.sunset"])
+        windDegrees <- map["wind.deg"]
+        windSpeed <- map["wind.speed"]
+        pressure <- map["main.pressure"]
+        humidity <- map["main.humidity"]
+        sunriseTime <- (map["sys.sunrise"], DateTransform())
+        sunsetTime <- (map["sys.sunset"], DateTransform())
     }
 }
 
 extension Weather: CustomStringConvertible {
     var description: String {
-        let descr = dateAndTime! + "\n" +
-            "temperature" + temperature!.description + "\n" +
-            "conditions" + conditions! + "\n" +
-            "wind.speed" + wind!.description + "\n" +
-            "pressure" + pressure!.description + "\n" +
-            "humidity" + humidity!.description + "\n" +
-            "sunriseTime" + sunriseTime!  + "\n" +
-            "sunsetTIme" + sunsetTime!
-        return descr
+        var properties: [String: String] = [:]
+        
+        if let temperature = temperature {
+        properties["temperature"] = Temperature(value: temperature).description
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = SettingsManager.sharedInstance.dateAndTimeFormat
+        formatter.locale = SettingsManager.sharedInstance.locale
+        
+        if let date = date {
+        properties["dateAndTime"] = CustomDateFormatter.parseDate(date, formatter)
+        }
+        if let conditions = conditions {
+        properties["conditions"] = conditions
+        }
+        
+        if let windSpeed = windSpeed {
+        properties["wind.speed"] = String(windSpeed)
+        }
+            
+        if let pressure = pressure {
+        properties["pressure"] = String(pressure)
+        }
+            
+        if let humidity = humidity {
+        properties["humidity"] = String(humidity)
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = SettingsManager.sharedInstance.timeFormat
+        
+        if let sunriseTime = sunriseTime {
+            properties["sunriseTime"] = CustomDateFormatter.parseDate(sunriseTime, dateFormatter)
+        }
+        if let sunsetTime = sunsetTime {
+            properties["sunsetTIme"] = CustomDateFormatter.parseDate(sunsetTime, dateFormatter)
+        }
+        
+        var propertiesString = ""
+            
+        for (propertyName, propertyValue) in properties {
+            let string = propertyName + ": " + propertyValue + "\n"
+            propertiesString.append(string)
+        }
+        return propertiesString
     }
 }

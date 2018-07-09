@@ -14,6 +14,6 @@ struct Pressure {
 
 extension Pressure: CustomStringConvertible {
     var description: String {
-        return String(self.value) + "мм рт.ст"
+        return String(self.value) + " мм рт.ст"
     }
 }

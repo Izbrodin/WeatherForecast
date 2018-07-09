@@ -25,7 +25,10 @@ class TimeUpdatedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func update(dateAndTime: String) {
-        timeUpdated.text = dateAndTime
+    func update(date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = SettingsManager.sharedInstance.dateAndTimeFormat
+        formatter.locale = SettingsManager.sharedInstance.locale
+        timeUpdated.text = formatter.string(from: date)
     }
 }

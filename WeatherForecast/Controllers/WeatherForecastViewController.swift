@@ -27,6 +27,7 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
     //Data for each table section
     var tableData: [SectionData] = []
     var estimatedRowHeight: CGFloat = 120
+    var estimatedSectionHeaderHeight: CGFloat = 90
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
         cellTypeLastIndex = cellTypes.count - 1
         
         configureRowHeight()
+        configureSectionHeaderHeight()
         
         registerCells()
         
@@ -44,7 +46,7 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (previouslyDisplayedCity != CityManager.city.name) {
+        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
             //hide city name label
             self.cityNameLabel.isHidden = true
             //hide tableview until data received
@@ -54,7 +56,7 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (previouslyDisplayedCity != CityManager.city.name) {
+        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
             tableData.removeAll()
             startActivityIndicator()
             loadForecastFor5Days()
@@ -64,26 +66,13 @@ class WeatherForecastViewController: UIViewController, ExpandableHeaderViewDeleg
     }
     
     func loadForecastFor5Days() {
-        previouslyDisplayedCity = CityManager.city.name
-        let languageIndex = "ru"
-        let units = "metric"
-        let appId = "04fe9bc8bdd23ab05caa33af5b162552"
-        
-        let url = URLBuilder()
-            .set(scheme: "http")
-            .set(host: "api.openweathermap.org")
-            .set(path: "data/2.5/forecast")
-            .addQueryItem(name: "q", value: CityManager.city.name)
-            .addQueryItem(name: "lang", value: languageIndex)
-            .addQueryItem(name: "units", value: units)
-            .addQueryItem(name: "appid", value: appId)
-            .build()!
+        previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
 
-        OpenWeatherAPI(url).requestForecastFor5Days(completion: {(forecast, error) in
+        OpenWeatherAPI.requestForecastFor5Days(completion: {(forecast, error) in
             if let receivedError = error {
-            self.displayErrorAlert(receivedError.localizedDescription)
+                self.displayErrorAlert(receivedError.localizedDescription)
             } else {
-                self.cityNameLabel.text = CityManager.city.name
+                self.cityNameLabel.text = SettingsManager.sharedInstance.cityName
                 self.constructTableViewSections(forecast)
                 self.tableViewWeatherForeCast.isHidden = false
                 self.cityNameLabel.isHidden = false
@@ -101,9 +90,7 @@ extension WeatherForecastViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         let numberOfRowsInSection = tableData[section].expanded ? tableData[section].count * cellTypes.count : 0
-        
         return numberOfRowsInSection
     }
  
@@ -118,20 +105,20 @@ extension WeatherForecastViewController: UITableViewDataSource {
         let rowNumberDividedByCellTypes = Int(rowNumber / cellTypes.count)
 
         weatherIndex = rowNumberDividedByCellTypes
-        
+
         let weather = tableData[section][weatherIndex]
         let cellTypeIndex = rowNumber % cellTypes.count
         
         switch cellTypes[cellTypeIndex] {
         case .Time:
             let cell: WeatherTimeCell = tableView.dequeueReusableCell(for: indexPath)
-            if let weatherTime = weather.time {
+            if let weatherTime = weather.date {
                 cell.update(time: weatherTime)
             }
             return cell
         case .Description:
             let cell: DescriptionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(weather: weather)
+                cell.update(weather: weather)
             return cell
         case .Wind:
             let cell: WindTableViewCell = tableView.dequeueReusableCell(for: indexPath)
@@ -139,17 +126,23 @@ extension WeatherForecastViewController: UITableViewDataSource {
             return cell
         case .Pressure:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(pressure: weather.pressure)
+            if let pressureValue = weather.pressure {
+                let pressure = Pressure(value: pressureValue)
+                cell.update(pressure: pressure)
+            }
             return cell
         case .Humidity:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(humidity: weather.humidity)
+            if let humidityValue = weather.humidity {
+                 let humidity = Humidity(value: humidityValue)
+                cell.update(humidity: humidity)
+            }
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(Double(self.view.frame.size.height) / Double(cellTypes.count))
+        return estimatedSectionHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -161,24 +154,44 @@ extension WeatherForecastViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = ExpandableHeaderView()
-        let sectionTitle = tableData[section].title
-        header.customInit(title: sectionTitle, section: section, delegate: self)
-        return header
-    }
+        let headerView: ExpandableHeaderView = tableView.dequeueReusableHeaderFooterView()
+            let sectionTitle = tableData[section].title
+            headerView.customInit(title: sectionTitle, section: section, delegate: self)
+            return headerView
+        }
     
     func toggleSection(header: ExpandableHeaderView, section: Int) {
-        tableData[section].expanded = !tableData[section].expanded
+        let sectionsCount = tableData.count
+        
+        for i in 0..<sectionsCount {
+            if tableData[i].expanded && i != section {
+                invertSectionExpandedState(i)
+                tableViewWeatherForeCast.beginUpdates()
+                tableViewWeatherForeCast.reloadSections(IndexSet(integer: i), with: .automatic)
+                tableViewWeatherForeCast.endUpdates()
+            }
+        }
+        
+       DispatchQueue.main.async {
+            self.tableViewWeatherForeCast.reloadData()
+        }
+        
+        invertSectionExpandedState(section)
 
         if tableData[section].expanded {
         tableViewWeatherForeCast.beginUpdates()
         tableViewWeatherForeCast.reloadSections(IndexSet(integer: section), with: .automatic)
         tableViewWeatherForeCast.endUpdates()
-        }
-        
+
         DispatchQueue.main.async {
-            self.tableViewWeatherForeCast.reloadData()
+            let indexPath = IndexPath(row: 0, section: section)
+            self.tableViewWeatherForeCast.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
         }
+    }
+    
+    func invertSectionExpandedState(_ section: Int) {
+        tableData[section].expanded = !tableData[section].expanded
     }
 }
 
@@ -189,13 +202,15 @@ extension WeatherForecastViewController: UITableViewDelegate {
 extension WeatherForecastViewController {
     func constructTableViewSections(_ weatherForecast: WeatherForecast?) {
         let sortedWeatherList: [[Weather]] = (weatherForecast?.sortByDays())!
-        let next5DaysNames = DateHelper.getNextFiveDaysNames()
-        let daysRange = 0..<cellTypes.count
+    
+        if let nearestDaysNames = weatherForecast?.getNearestDaysNames() {
+        let daysRange = 0..<nearestDaysNames.count
         for day in daysRange {
-            let dayName = next5DaysNames[day]
+            let dayName = nearestDaysNames[day]
             let weatherList = sortedWeatherList[day]
             let sectionData = SectionData(title: dayName, weatherList: weatherList, expanded: false)
             tableData.append(sectionData)
+            }
         }
     }
 }
@@ -229,12 +244,17 @@ extension WeatherForecastViewController {
         tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
     }
     
+    func configureSectionHeaderHeight() {
+        estimatedSectionHeaderHeight = CGFloat(0.16 * Double(tableViewWeatherForeCast.bounds.height))
+    }
+    
     func registerCells() {
         //register all types of custom cells
         tableViewWeatherForeCast.register(cellClass: WeatherTimeCell.self)
         tableViewWeatherForeCast.register(cellClass: DescriptionTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: WindTableViewCell.self)
         tableViewWeatherForeCast.register(cellClass: ParameterTableViewCell.self)
+        tableViewWeatherForeCast.register(headerClass: ExpandableHeaderView.self)
     }
 }
 

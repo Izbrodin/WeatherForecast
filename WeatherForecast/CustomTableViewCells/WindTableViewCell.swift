@@ -61,7 +61,8 @@ class WindTableViewCell: UITableViewCell {
     }
     
     func update(weather: Weather?) {
-        if let wind = weather?.wind {
+        if let windDegrees = weather?.windDegrees, let windSpeed = weather?.windSpeed {
+            let wind = Wind(degrees: windDegrees, speed: windSpeed)
             setWindDirection(wind.degrees)
             direction.text = wind.getDirection()
             speed.text = wind.description

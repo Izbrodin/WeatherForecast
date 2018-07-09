@@ -48,6 +48,11 @@ class URLBuilder {
         return self
     }
     
+    func addQueryItems(_ items: [URLQueryItem]) -> URLBuilder {
+        self.components.queryItems = items
+        return self
+    }
+    
     func build() -> URL? {
         return self.components.url
     }

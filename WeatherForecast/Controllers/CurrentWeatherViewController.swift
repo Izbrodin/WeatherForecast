@@ -20,7 +20,7 @@ class CurrentWeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (previouslyDisplayedCity != CityManager.city.name) {
+        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
             //hide tableview until data received
             self.tableViewCurrentWeather.isHidden = true
         }
@@ -28,7 +28,7 @@ class CurrentWeatherViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (previouslyDisplayedCity != CityManager.city.name) {
+        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
             startActivityIndicator()
             loadCurrentWeather()
         } else {
@@ -37,24 +37,11 @@ class CurrentWeatherViewController: UIViewController {
     }
     
     func loadCurrentWeather() {
-        previouslyDisplayedCity = CityManager.city.name
-        let languageIndex = "ru"
-        let units = "metric"
-        let appId = "04fe9bc8bdd23ab05caa33af5b162552"
+        previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
         
-        let url = URLBuilder()
-            .set(scheme: "http")
-            .set(host: "api.openweathermap.org")
-            .set(path: "data/2.5/weather")
-            .addQueryItem(name: "q", value: CityManager.city.name)
-            .addQueryItem(name: "lang", value: languageIndex)
-            .addQueryItem(name: "units", value: units)
-            .addQueryItem(name: "appid", value: appId)
-            .build()!
-        
-        OpenWeatherAPI(url).requestCurrentWeather(completion: {(weather, error) in
+        OpenWeatherAPI.requestCurrentWeather(completion: {(weather, error) in
             if let receivedError = error {
-                self.displayErrorAlert(receivedError.localizedDescription)
+           self.displayErrorAlert(receivedError.localizedDescription)
             }
             else {
             self.weather = weather
@@ -86,8 +73,8 @@ extension CurrentWeatherViewController: UITableViewDataSource {
             return cell
         case .TimeUpdated:
             let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let timeUpdated = weather?.dateAndTime {
-                cell.update(dateAndTime: timeUpdated)
+            if let date = weather?.date {
+                cell.update(date: date)
             }
             return cell
         case .Description:
@@ -100,19 +87,29 @@ extension CurrentWeatherViewController: UITableViewDataSource {
             return cell
         case .Pressure:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(pressure: weather?.pressure)
+            if let pressure = weather?.pressure {
+                let pressure = Pressure(value: pressure)
+                cell.update(pressure: pressure)
+            }
             return cell
         case .Humidity:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(humidity: weather?.humidity)
+            if let humidity = weather?.humidity {
+            let humidity = Humidity(value: humidity)
+            cell.update(humidity: humidity)
+            }
             return cell
         case .Sunrise:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(parameter: .sunrise, from: weather)
+            if let sunriseTime = weather?.sunriseTime{
+                cell.update(parameter: .sunrise, value: sunriseTime)
+            }
             return cell
         case .Sunset:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(parameter: .sunset, from: weather)
+            if let sunsetTime = weather?.sunsetTime {
+                cell.update(parameter: .sunset, value: sunsetTime)
+            }
             return cell
         }
     }

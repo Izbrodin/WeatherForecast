@@ -12,4 +12,15 @@ extension UITableView {
         let cell = self.dequeueReusableCell(withIdentifier: name, for: indexPath) as! T
         return cell
     }
+    
+    func register(headerClass: UITableViewHeaderFooterView.Type) {
+        let name = String(describing: headerClass)
+        self.register(UINib(nibName: name, bundle: nil), forHeaderFooterViewReuseIdentifier: name)
+    }
+    
+    func dequeueReusableHeaderFooterView<T>() -> T where T: UITableViewHeaderFooterView {
+        let name = String(describing: T.self)
+        let headerFooterView = self.dequeueReusableHeaderFooterView(withIdentifier: name) as! T
+        return headerFooterView
+    }
 }

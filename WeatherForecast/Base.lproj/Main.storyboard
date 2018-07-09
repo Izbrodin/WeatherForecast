@@ -6,15 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Swipeable Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="Qxh-Y8-Y2j">
             <objects>
-                <tabBarController id="P9O-9z-2eC" customClass="SwipeableTabBarController" customModule="SwipeableTabBarController" sceneMemberID="viewController">
+                <tabBarController id="P9O-9z-2eC" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JBX-Je-cO8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -44,7 +43,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vqh-xq-MFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-206" y="-612"/>
+            <point key="canvasLocation" x="-1735" y="575"/>
         </scene>
         <!--Погода сейчас-->
         <scene sceneID="qfh-de-tfJ">
@@ -64,7 +63,7 @@
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="leading" secondItem="geA-h3-Osn" secondAttribute="leading" id="QJj-gC-dvZ"/>
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="trailing" secondItem="geA-h3-Osn" secondAttribute="trailing" id="fh3-90-AiX"/>
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="top" secondItem="geA-h3-Osn" secondAttribute="top" id="nTO-mU-EKn"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="BxG-iV-7nj" secondAttribute="bottom" id="opv-w2-uwV"/>
+                            <constraint firstItem="BxG-iV-7nj" firstAttribute="bottom" secondItem="geA-h3-Osn" secondAttribute="bottom" id="uiC-WP-Icl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="geA-h3-Osn"/>
                     </view>
@@ -75,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSb-9v-zyG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="181"/>
+            <point key="canvasLocation" x="-999" y="575"/>
         </scene>
         <!--Прогноз погоды-->
         <scene sceneID="M29-V9-Rdg">
@@ -85,9 +84,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WcN-kd-u91">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="WcN-kd-u91">
                                 <rect key="frame" x="0.0" y="72" width="414" height="615"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0br-rg-WQl">
@@ -116,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dqq-R3-ghZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-999" y="605"/>
+            <point key="canvasLocation" x="-243" y="575"/>
         </scene>
     </scenes>
     <resources>

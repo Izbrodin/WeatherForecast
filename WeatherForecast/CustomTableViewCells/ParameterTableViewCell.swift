@@ -34,18 +34,21 @@ class ParameterTableViewCell: UITableViewCell {
         }
     }
  
-    func update(parameter: SunMode, from weather: Weather?) {
+    func update(parameter: SunMode, value time: Date) {
+        let timeFormat = DateFormatter()
+        timeFormat.dateFormat = SettingsManager.sharedInstance.timeFormat
+        
         switch parameter {
         case .sunrise:
-            if let sunrise = weather?.sunriseTime {
              setParameterName("Рассвет:")
-             setParameterValue(sunrise)
-            }
+                
+             let sunriseTimeFormatted = CustomDateFormatter.parseDate(time, timeFormat)
+             setParameterValue(sunriseTimeFormatted)
         case .sunset:
-            if let sunset = weather?.sunsetTime {
                 setParameterName("Закат:")
-                setParameterValue(sunset)
-            }
+        
+                let sunsetTimeFormatted = CustomDateFormatter.parseDate(time, timeFormat)
+                setParameterValue(sunsetTimeFormatted)
         }
     }
     

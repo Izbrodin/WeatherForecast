@@ -19,22 +19,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TR-7K-CE5">
-                        <rect key="frame" x="146.5" y="12" width="82.5" height="42"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hlb-A9-hCo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TR-7K-CE5">
+                                <rect key="frame" x="146" y="11" width="82.5" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0TR-7K-CE5" firstAttribute="centerY" secondItem="Hlb-A9-hCo" secondAttribute="centerY" id="R9n-fj-sHu"/>
+                            <constraint firstItem="0TR-7K-CE5" firstAttribute="centerX" secondItem="Hlb-A9-hCo" secondAttribute="centerX" id="xrw-5g-hYo"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="0TR-7K-CE5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Khl-R2-HRB"/>
-                    <constraint firstItem="0TR-7K-CE5" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="tPI-ng-dsX"/>
+                    <constraint firstAttribute="trailing" secondItem="Hlb-A9-hCo" secondAttribute="trailing" id="6Df-9g-ba3"/>
+                    <constraint firstItem="Hlb-A9-hCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="KkI-dx-zbF"/>
+                    <constraint firstAttribute="bottom" secondItem="Hlb-A9-hCo" secondAttribute="bottom" id="wNr-tv-X3o"/>
+                    <constraint firstItem="Hlb-A9-hCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xjm-oU-tYD"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="time" destination="0TR-7K-CE5" id="1ns-ns-cdi"/>
             </connections>
+            <point key="canvasLocation" x="32.5" y="102.5"/>
         </tableViewCell>
     </objects>
 </document>

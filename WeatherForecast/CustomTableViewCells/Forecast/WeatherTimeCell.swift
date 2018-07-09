@@ -23,7 +23,10 @@ class WeatherTimeCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func update(time: String) {
-        self.time.text = time
+    func update(time: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = SettingsManager.sharedInstance.timeFormat
+
+        self.time.text = CustomDateFormatter.parseDate(time, dateFormatter)
     }
 }

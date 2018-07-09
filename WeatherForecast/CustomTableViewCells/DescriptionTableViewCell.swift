@@ -44,9 +44,8 @@ class DescriptionTableViewCell: UITableViewCell {
             weatherDescription.text = conditions
         }
         
-        if let temperatureValue = weather?.temperature?.description{
-            temperature.text = temperatureValue
+        if let temperatureValue = weather?.temperature {
+            temperature.text = Temperature(value: temperatureValue).description
         }
     }
-    
 }

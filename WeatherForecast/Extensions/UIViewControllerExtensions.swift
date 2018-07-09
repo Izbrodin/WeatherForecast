@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIViewController {
+    
     func displayErrorAlert(_ errorText: String) {
         let alert = UIAlertController(title: "Ошибка", message: errorText, preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
