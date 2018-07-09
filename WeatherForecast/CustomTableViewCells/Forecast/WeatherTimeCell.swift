@@ -26,7 +26,7 @@ class WeatherTimeCell: UITableViewCell {
     func update(time: Date) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = SettingsManager.sharedInstance.timeFormat
-
+        dateFormatter.timeZone = SettingsManager.sharedInstance.timeZone
         self.time.text = CustomDateFormatter.parseDate(time, dateFormatter)
     }
 }

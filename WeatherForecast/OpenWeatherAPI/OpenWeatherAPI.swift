@@ -11,13 +11,12 @@ import Alamofire
 import ObjectMapper
 
 class OpenWeatherAPI {
+    
     static func requestCurrentWeather(completion: @escaping (Weather?, Error?) -> ()) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlCurrentWeather = SettingsManager.sharedInstance.baseUrlCurrentWeather
-        
-        
         let url = baseUrlCurrentWeather.addQueryItems(queryItems).build()!
-        print(url)
+        
         Alamofire.request(url, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -31,7 +30,6 @@ class OpenWeatherAPI {
     
     static func requestForecastFor5Days(completion: @escaping (WeatherForecast?, Error?) -> ()) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
-        
         let baseUrlForecast5Days = SettingsManager.sharedInstance.baseUrlForecast5Days
         let url = baseUrlForecast5Days.addQueryItems(queryItems).build()!
         
@@ -54,8 +52,8 @@ class OpenWeatherAPI {
         let units =  SettingsManager.sharedInstance.units
         let appId = SettingsManager.sharedInstance.appId
         
+        //construct array of query parameters
         var queryItems: [URLQueryItem] = []
-        //append parameters to array of query items
         queryItems.append(URLQueryItem(name: "q", value: cityName))
         queryItems.append(URLQueryItem(name: "lang", value: languageIndex))
         queryItems.append(URLQueryItem(name: "units", value: units))

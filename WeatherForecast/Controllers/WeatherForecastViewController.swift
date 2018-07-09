@@ -161,37 +161,42 @@ extension WeatherForecastViewController: UITableViewDataSource {
         }
     
     func toggleSection(header: ExpandableHeaderView, section: Int) {
+        //change state of currently expanded sections and hide them
         let sectionsCount = tableData.count
-        
-        for i in 0..<sectionsCount {
-            if tableData[i].expanded && i != section {
-                invertSectionExpandedState(i)
-                tableViewWeatherForeCast.beginUpdates()
-                tableViewWeatherForeCast.reloadSections(IndexSet(integer: i), with: .automatic)
-                tableViewWeatherForeCast.endUpdates()
-            }
-        }
-        
-       DispatchQueue.main.async {
-            self.tableViewWeatherForeCast.reloadData()
-        }
-        
+
         invertSectionExpandedState(section)
 
         if tableData[section].expanded {
-        tableViewWeatherForeCast.beginUpdates()
-        tableViewWeatherForeCast.reloadSections(IndexSet(integer: section), with: .automatic)
-        tableViewWeatherForeCast.endUpdates()
-
+        //scroll first row of section at the top
         DispatchQueue.main.async {
+            self.reloadSection(section)
             let indexPath = IndexPath(row: 0, section: section)
             self.tableViewWeatherForeCast.scrollToRow(at: indexPath, at: .top, animated: true)
             }
+            DispatchQueue.main.async {
+                self.tableViewWeatherForeCast.reloadData()
+            }
+        }
+        
+        DispatchQueue.main.async {
+            for i in 0..<sectionsCount {
+                if self.tableData[i].expanded && i != section {
+                    self.invertSectionExpandedState(i)
+                    self.reloadSection(i)
+                }
+            }
+            self.tableViewWeatherForeCast.reloadData()
         }
     }
     
     func invertSectionExpandedState(_ section: Int) {
         tableData[section].expanded = !tableData[section].expanded
+    }
+    
+    func reloadSection(_ section: Int) {
+        tableViewWeatherForeCast.beginUpdates()
+        tableViewWeatherForeCast.reloadSections(IndexSet(integer: section), with: .automatic)
+        tableViewWeatherForeCast.endUpdates()
     }
 }
 

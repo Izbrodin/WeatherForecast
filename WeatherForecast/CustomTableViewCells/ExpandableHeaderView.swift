@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ExpandableHeaderViewDelegate: {
+protocol ExpandableHeaderViewDelegate {
     func toggleSection(header: ExpandableHeaderView, section: Int)
 }
 
