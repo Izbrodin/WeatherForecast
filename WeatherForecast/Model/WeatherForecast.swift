@@ -32,8 +32,6 @@ extension WeatherForecast {
         //sort weather list by date ascending
         list.sort(by: { $0.date?.compare($1.date!) == .orderedAscending })
         
-        let calendar = SettingsManager.sharedInstance.calendar
-        
         if let currDateFromAPI = list[0].date {
             currentDate = currDateFromAPI
         }

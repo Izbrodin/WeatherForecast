@@ -27,6 +27,9 @@ class SettingsManager {
         .set(host: "api.openweathermap.org")
         .set(path: "data/2.5/forecast");
     
+    let apiIconBaseUrl = "http://openweathermap.org/img/w/"
+    let apiIconExtension = ".png"
+    
     var languageIndex = "ru"
     var units = "metric"
     let appId = "04fe9bc8bdd23ab05caa33af5b162552"

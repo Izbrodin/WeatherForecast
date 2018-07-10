@@ -17,9 +17,8 @@ class DescriptionTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var temperature: UILabel!
 
-    private let apiIconPath = "http://openweathermap.org/img/w/"
-    
-    private let iconExtension = ".png"
+    private let apiIconPath = SettingsManager.sharedInstance.apiIconBaseUrl
+    private let iconExtension = SettingsManager.sharedInstance.apiIconExtension
     
     override func awakeFromNib() {
         super.awakeFromNib()

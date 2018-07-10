@@ -24,6 +24,7 @@ class WindTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
         let fontCoefficient1 = Double(self.bounds.width / 2860)
         

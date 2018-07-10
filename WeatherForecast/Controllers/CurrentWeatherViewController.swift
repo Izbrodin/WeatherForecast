@@ -41,9 +41,8 @@ class CurrentWeatherViewController: UIViewController {
         
         OpenWeatherAPI.requestCurrentWeather(completion: {(weather, error) in
             if let receivedError = error {
-           self.displayErrorAlert(receivedError.localizedDescription)
-            }
-            else {
+                self.displayErrorAlert(receivedError.localizedDescription)
+            } else {
             self.weather = weather
             self.stopActivityIndicator()
             self.tableViewCurrentWeather.isHidden = false
@@ -130,7 +129,6 @@ extension CurrentWeatherViewController {
             self.view.addSubview(self.activityIndicator)
             self.activityIndicator.startAnimating()
         }
-        
     }
     
     func stopActivityIndicator() {

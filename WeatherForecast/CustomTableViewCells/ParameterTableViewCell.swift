@@ -15,6 +15,7 @@ class ParameterTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
         parameterLabel.setFontSizeFitWidth()
         parameterValue.setFontSizeFitWidth()

@@ -14,15 +14,6 @@ extension Date {
     func daysEqual(with date: Date) -> Bool {
         var calendar = SettingsManager.sharedInstance.calendar
         calendar.timeZone = SettingsManager.sharedInstance.timeZone
-        
-        let date1Year = calendar.component(.year, from: self)
-        let date1Month = calendar.component(.month, from: self)
-        let date1Day = calendar.component(.day, from: self)
-        
-        let date2Year = calendar.component(.year, from: date)
-        let date2Month = calendar.component(.month, from: date)
-        let date2Day = calendar.component(.day, from: date)
-        
-        return (date1Year == date2Year) && (date1Month == date2Month) && (date1Day == date2Day)
+        return calendar.compare(self, to: date, toGranularity: .day) == .orderedSame
     }
 }

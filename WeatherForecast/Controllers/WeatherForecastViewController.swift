@@ -167,12 +167,14 @@ extension WeatherForecastViewController: UITableViewDataSource {
         invertSectionExpandedState(section)
 
         if tableData[section].expanded {
+    
         //scroll first row of section at the top
         DispatchQueue.main.async {
             self.reloadSection(section)
             let indexPath = IndexPath(row: 0, section: section)
             self.tableViewWeatherForeCast.scrollToRow(at: indexPath, at: .top, animated: true)
             }
+            
             DispatchQueue.main.async {
                 self.tableViewWeatherForeCast.reloadData()
             }
@@ -243,8 +245,10 @@ extension WeatherForecastViewController {
     func configureRowHeight() {
         //calculation of estimated row height
         let estimatedRowHeight = CGFloat(0.15 * Double(tableViewWeatherForeCast.bounds.height))
+        
         //set estimated row height
         tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
+        
         //set automatic dimension of row height
         tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
     }

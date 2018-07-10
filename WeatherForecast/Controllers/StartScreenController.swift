@@ -35,7 +35,7 @@ class StartScreenController: UIViewController {
                  let city = textField.text!
                 if !city.isEmpty {
                 SettingsManager.sharedInstance.cityName = city
-                //CityManager.city.name = city
+                    
                 self.cityWasSelected = true
                 self.selectTabWithIndex(1)
                 } else {
