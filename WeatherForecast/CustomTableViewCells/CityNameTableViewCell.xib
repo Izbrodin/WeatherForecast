@@ -20,12 +20,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xy9-BT-f07">
-                        <rect key="frame" x="113.5" y="16" width="149.5" height="42"/>
+                        <rect key="frame" x="113" y="14.5" width="150.5" height="45"/>
                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                         <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
+                        <color key="highlightedColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="shadowColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="1" height="-3"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="xy9-BT-f07" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KB7-Kn-O1X"/>
                     <constraint firstItem="xy9-BT-f07" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wfq-hA-Rzj"/>

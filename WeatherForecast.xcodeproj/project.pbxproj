@@ -23,6 +23,7 @@
 		8468B44120C42DD0001D79C0 /* CurrentWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8468B44020C42DD0001D79C0 /* CurrentWeatherViewController.swift */; };
 		8474C8BC20C4915A00759EBC /* TimeUpdatedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474C8BA20C4915A00759EBC /* TimeUpdatedTableViewCell.swift */; };
 		8474C8BD20C4915A00759EBC /* TimeUpdatedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8474C8BB20C4915A00759EBC /* TimeUpdatedTableViewCell.xib */; };
+		847A1E7920F611EC007335FC /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 847A1E7820F611EC007335FC /* cities.json */; };
 		8484848920B45CB60075981C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484848820B45CB60075981C /* AppDelegate.swift */; };
 		8484848E20B45CB60075981C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8484848C20B45CB60075981C /* Main.storyboard */; };
 		8484849020B45CB80075981C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8484848F20B45CB80075981C /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		84925D7E20C16AD400D46DAB /* DescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84925D7C20C16AD400D46DAB /* DescriptionTableViewCell.xib */; };
 		84925D8120C16D0800D46DAB /* WindTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84925D7F20C16D0800D46DAB /* WindTableViewCell.swift */; };
 		84925D8220C16D0800D46DAB /* WindTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84925D8020C16D0800D46DAB /* WindTableViewCell.xib */; };
+		84962E0620F4E5C80060B30F /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84962E0520F4E5C80060B30F /* City.swift */; };
 		849B70CE20CA885B00EA4217 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B70CD20CA885B00EA4217 /* UITableViewExtensions.swift */; };
 		84A5C2B020EE7FBF00340776 /* OpenWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84515C9B20B8347A008F64A4 /* OpenWeatherAPI.swift */; };
 		84ABF09A20C7E49500068982 /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ABF09920C7E49500068982 /* CellType.swift */; };
@@ -67,6 +69,7 @@
 		8468B44020C42DD0001D79C0 /* CurrentWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewController.swift; sourceTree = "<group>"; };
 		8474C8BA20C4915A00759EBC /* TimeUpdatedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUpdatedTableViewCell.swift; sourceTree = "<group>"; };
 		8474C8BB20C4915A00759EBC /* TimeUpdatedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeUpdatedTableViewCell.xib; sourceTree = "<group>"; };
+		847A1E7820F611EC007335FC /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		8484848520B45CB60075981C /* WeatherForecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherForecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8484848820B45CB60075981C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8484848D20B45CB60075981C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,6 +84,7 @@
 		84925D7C20C16AD400D46DAB /* DescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		84925D7F20C16D0800D46DAB /* WindTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindTableViewCell.swift; sourceTree = "<group>"; };
 		84925D8020C16D0800D46DAB /* WindTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WindTableViewCell.xib; sourceTree = "<group>"; };
+		84962E0520F4E5C80060B30F /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		849B70CD20CA885B00EA4217 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		84ABF09920C7E49500068982 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		84B2461920CAC559003785E3 /* WeatherForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 		8484848720B45CB60075981C /* WeatherForecast */ = {
 			isa = PBXGroup;
 			children = (
+				84E2C5E020F4BC16003D2E39 /* Files */,
 				8434ADC920D2A30700E35275 /* TableView */,
 				84E0783B20CFFB82005EBB9E /* Helpers */,
 				849B70CC20CA885B00EA4217 /* Extensions */,
@@ -221,6 +226,7 @@
 			children = (
 				8423992320B5A722009102CE /* Weather.swift */,
 				84C233BD20CBE06F00D6BB7F /* WeatherForecast.swift */,
+				84962E0520F4E5C80060B30F /* City.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,6 +257,14 @@
 				84CC78F120ECF93D006F71F1 /* SettingsManager.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		84E2C5E020F4BC16003D2E39 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				847A1E7820F611EC007335FC /* cities.json */,
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 		8BFCF5CF18A05E22EC1FDDA0 /* Frameworks */ = {
@@ -338,6 +352,7 @@
 				84925D7A20C168FC00D46DAB /* ParameterTableViewCell.xib in Resources */,
 				8484848E20B45CB60075981C /* Main.storyboard in Resources */,
 				84925D7E20C16AD400D46DAB /* DescriptionTableViewCell.xib in Resources */,
+				847A1E7920F611EC007335FC /* cities.json in Resources */,
 				8474C8BD20C4915A00759EBC /* TimeUpdatedTableViewCell.xib in Resources */,
 				84925D6F20C15F8F00D46DAB /* CityNameTableViewCell.xib in Resources */,
 			);
@@ -374,16 +389,14 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/SwipeableTabBarController/SwipeableTabBarController.framework",
+				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeableTabBarController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -423,6 +436,7 @@
 				8484848920B45CB60075981C /* AppDelegate.swift in Sources */,
 				84925D8120C16D0800D46DAB /* WindTableViewCell.swift in Sources */,
 				8474C8BC20C4915A00759EBC /* TimeUpdatedTableViewCell.swift in Sources */,
+				84962E0620F4E5C80060B30F /* City.swift in Sources */,
 				8423992720B5A8BD009102CE /* Wind.swift in Sources */,
 				84CC78F320ECF93D006F71F1 /* SettingsManager.swift in Sources */,
 				8434ADCB20D2A35B00E35275 /* SectionData.swift in Sources */,

@@ -20,7 +20,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Zn0-cA-e0m" kind="relationship" relationship="viewControllers" id="3ci-Rn-e1M"/>
                         <segue destination="mmc-c2-SxQ" kind="relationship" relationship="viewControllers" id="Hb8-wc-gmE"/>
                         <segue destination="YPd-GA-J2T" kind="relationship" relationship="viewControllers" id="LMb-Ot-D3s"/>
                     </connections>
@@ -54,27 +53,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BxG-iV-7nj">
-                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
+                                <rect key="frame" x="0.0" y="54" width="414" height="633"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TuR-gM-GXD" customClass="SearchTextField" customModule="SearchTextField">
+                                <rect key="frame" x="0.0" y="20" width="414" height="34"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="BxG-iV-7nj" firstAttribute="top" secondItem="TuR-gM-GXD" secondAttribute="bottom" id="6fH-FC-t92"/>
+                            <constraint firstItem="TuR-gM-GXD" firstAttribute="top" secondItem="geA-h3-Osn" secondAttribute="top" id="CHD-v4-0nh"/>
+                            <constraint firstItem="BxG-iV-7nj" firstAttribute="top" secondItem="TuR-gM-GXD" secondAttribute="bottom" id="M2b-Rb-4W8"/>
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="leading" secondItem="geA-h3-Osn" secondAttribute="leading" id="QJj-gC-dvZ"/>
+                            <constraint firstItem="TuR-gM-GXD" firstAttribute="leading" secondItem="geA-h3-Osn" secondAttribute="leading" id="dvQ-Nc-Xn9"/>
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="trailing" secondItem="geA-h3-Osn" secondAttribute="trailing" id="fh3-90-AiX"/>
-                            <constraint firstItem="BxG-iV-7nj" firstAttribute="top" secondItem="geA-h3-Osn" secondAttribute="top" id="nTO-mU-EKn"/>
+                            <constraint firstItem="TuR-gM-GXD" firstAttribute="trailing" secondItem="geA-h3-Osn" secondAttribute="trailing" id="iZO-Q1-Ojg"/>
                             <constraint firstItem="BxG-iV-7nj" firstAttribute="bottom" secondItem="geA-h3-Osn" secondAttribute="bottom" id="uiC-WP-Icl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="geA-h3-Osn"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Погода сейчас" id="L7Z-0b-P8h"/>
                     <connections>
+                        <outlet property="mySearchTextField" destination="TuR-gM-GXD" id="Dv4-dV-7Bd"/>
                         <outlet property="tableViewCurrentWeather" destination="BxG-iV-7nj" id="1KK-qK-XKx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSb-9v-zyG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-999" y="575"/>
+            <point key="canvasLocation" x="-1000.0000000000001" y="574.72826086956525"/>
         </scene>
         <!--Прогноз погоды-->
         <scene sceneID="M29-V9-Rdg">
@@ -85,27 +95,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="WcN-kd-u91">
-                                <rect key="frame" x="0.0" y="72" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="61" width="414" height="626"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0br-rg-WQl">
-                                <rect key="frame" x="177.66666666666666" y="28" width="59" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0br-rg-WQl">
+                                <rect key="frame" x="0.0" y="28" width="414" height="33"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="1" height="-3"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0br-rg-WQl" firstAttribute="trailing" secondItem="ciS-gg-dLX" secondAttribute="trailing" id="3fr-KY-2FD"/>
                             <constraint firstItem="0br-rg-WQl" firstAttribute="top" secondItem="ciS-gg-dLX" secondAttribute="top" constant="8" id="6z2-91-tjh"/>
                             <constraint firstItem="WcN-kd-u91" firstAttribute="leading" secondItem="ciS-gg-dLX" secondAttribute="leading" id="9Fx-VQ-3tf"/>
                             <constraint firstItem="WcN-kd-u91" firstAttribute="bottom" secondItem="ciS-gg-dLX" secondAttribute="bottom" id="EnT-9c-EgD"/>
                             <constraint firstItem="0br-rg-WQl" firstAttribute="centerX" secondItem="ciS-gg-dLX" secondAttribute="centerX" id="Pyw-qc-9hr"/>
                             <constraint firstItem="WcN-kd-u91" firstAttribute="trailing" secondItem="ciS-gg-dLX" secondAttribute="trailing" id="Y2U-Qg-t8r"/>
-                            <constraint firstItem="WcN-kd-u91" firstAttribute="top" secondItem="0br-rg-WQl" secondAttribute="bottom" constant="14" id="hZO-aT-kHK"/>
+                            <constraint firstItem="WcN-kd-u91" firstAttribute="top" secondItem="0br-rg-WQl" secondAttribute="bottom" id="hZO-aT-kHK"/>
+                            <constraint firstItem="0br-rg-WQl" firstAttribute="leading" secondItem="ciS-gg-dLX" secondAttribute="leading" id="sF8-pS-bBa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ciS-gg-dLX"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Pyw-qc-9hr"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Прогноз погоды" id="LSL-5a-yAc"/>
                     <connections>
@@ -115,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dqq-R3-ghZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-243" y="575"/>
+            <point key="canvasLocation" x="-243.47826086956525" y="574.72826086956525"/>
         </scene>
     </scenes>
     <resources>

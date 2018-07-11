@@ -1,16 +1,60 @@
 import UIKit
+import SearchTextField
+import ObjectMapper
 
 class CurrentWeatherViewController: UIViewController {
-    
+
+    @IBOutlet weak var mySearchTextField: SearchTextField!
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
     var activityIndicator = UIActivityIndicatorView()
     
     var previouslyDisplayedCity: String!
     var weather: Weather?
     let cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
+    var cities: [City] = []
+    var citiesNames: [String?] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mySearchTextField.isUserInteractionEnabled = false
+        startActivityIndicator()
+        
+        //Handle item selection
+        mySearchTextField.itemSelectionHandler = { filteredResults, itemPosition in
+            let item = filteredResults[itemPosition]
+            
+            self.mySearchTextField.text = item.title
+            
+            if let city = self.mySearchTextField.text {
+                if !city.isEmpty {
+                    SettingsManager.sharedInstance.cityName = city
+                    if self.previouslyDisplayedCity != SettingsManager.sharedInstance.cityName {
+                        self.startActivityIndicator()
+                        self.loadCurrentWeather()
+                    } else {
+                        self.tableViewCurrentWeather.reloadData()
+                    }
+                }
+            }
+        }
+
+        // load cities data in a background
+        DispatchQueue.global(qos: .background).async {
+            if let path = Bundle.main.path(forResource: "cities", ofType: "json") {
+                self.loadCitiesDataFromJson(path)
+            //update UI in main thread
+            DispatchQueue.main.async {
+                if !self.citiesNames.isEmpty {
+                    self.mySearchTextField.filterStrings(self.citiesNames as! [String])
+                    self.stopActivityIndicator()
+                    self.displayCitiesLoadedAlert()
+                    self.mySearchTextField.isUserInteractionEnabled = true
+                }
+                }
+            }
+        }
+    
         configureRowHeight()
         
         registerCells()
@@ -23,16 +67,6 @@ class CurrentWeatherViewController: UIViewController {
         if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
             //hide tableview until data received
             self.tableViewCurrentWeather.isHidden = true
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
-            startActivityIndicator()
-            loadCurrentWeather()
-        } else {
-           tableViewCurrentWeather.reloadData()
         }
     }
     
@@ -155,5 +189,33 @@ extension CurrentWeatherViewController {
         tableViewCurrentWeather.register(cellClass: WindTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
+    }
+    
+    func loadCitiesDataFromJson(_ path: String) {
+        var jsonResult: [[String : Any]]
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            
+            jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [[String : Any]]
+            
+            self.cities = Mapper<City>().mapArray(JSONArray: jsonResult)
+            self.citiesNames = self.cities.map{$0.name}
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func displayCitiesLoadedAlert() {
+        let alertTitle = "Загрузка завершена"
+        let alertMessage = "Список городов загружен"
+        
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }

@@ -6,4 +6,5 @@ target 'WeatherForecast' do
 pod 'Alamofire', '~> 4.7'
 pod 'ObjectMapper', '~> 3.1'
 pod 'Kingfisher', '~> 4.0'
+pod 'SearchTextField'
 end
