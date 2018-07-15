@@ -24,12 +24,7 @@ class WindTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         // Initialization code
-        let fontCoefficient1 = Double(self.bounds.width / 2860)
-        
-        let compassLabelsGroup: [UILabel] = [wLabel, nLabel, eLabel, sLabel]
-        let size1 = CGFloat(Double(self.bounds.height) * fontCoefficient1)
     
         let directionAndSpeedLabelsGroup: [UILabel] = [directionLabel, speedLabel, direction, speed]
         
@@ -39,15 +34,19 @@ class WindTableViewCell: UITableViewCell {
         
         windHeader.setFontSizeFitWidth()
         
-        //set font size for wind direction image labels
-        for label in compassLabelsGroup {
-            label.font = label.font.withSize(size1)
-        }
-        
         //set font size for wind and speed labels
         for label in directionAndSpeedLabelsGroup {
             label.setFontSizeFitWidth()
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        //Set arrow in initial state before redrawing
+        arrowImage.transform = CGAffineTransform(rotationAngle: 0)
+        
+        direction.text = ""
+        speed.text = ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -61,12 +60,14 @@ class WindTableViewCell: UITableViewCell {
             })
     }
     
-    func update(weather: Weather?) {
-        if let windDegrees = weather?.windDegrees, let windSpeed = weather?.windSpeed {
-            let wind = Wind(degrees: windDegrees, speed: windSpeed)
-            setWindDirection(wind.degrees)
-            direction.text = wind.getDirection()
-            speed.text = wind.description
+    func update(from weather: CurrentWeather?) {
+        if let degrees = weather?.wind.degrees, let direction = weather?.wind.description {
+            setWindDirection(degrees)
+            self.direction.text = direction
+        }
+        
+        if let speedFormatted = weather?.wind.speedFormatted {
+           self.speed.text = speedFormatted
         }
     }
 }

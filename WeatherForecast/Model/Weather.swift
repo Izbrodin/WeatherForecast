@@ -11,7 +11,6 @@ import ObjectMapper
 
 class Weather: Mappable {
     var cityName: String?
-    var dateAndTime: Date?
     var temperature: Double?
     var conditions: String?
     var windDegrees: Double?
@@ -22,7 +21,6 @@ class Weather: Mappable {
     var sunsetTime: Date?
     var icon: String?
     var date: Date?
-    var time: String?
 
     required init?(map: Map) {
 

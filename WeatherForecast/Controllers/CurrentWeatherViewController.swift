@@ -3,11 +3,24 @@ import UIKit
 class CurrentWeatherViewController: UIViewController {
     
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
-    var activityIndicator = UIActivityIndicatorView()
     
-    var previouslyDisplayedCity: String!
-    var weather: Weather?
-    let cellTypes = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        
+        indicator.hidesWhenStopped = true
+        indicator.activityIndicatorViewStyle = .gray
+        indicator.color = UIColor.blue
+        
+        return indicator
+    }()
+    
+    private var previouslyDisplayedCity: String!
+    private var weather: Weather?
+    private var currentWeather: CurrentWeather?
+    
+    private let cellTypes = CellType.allValues
+    
+    private let estimatedRowHeight: CGFloat = 120
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,8 +28,8 @@ class CurrentWeatherViewController: UIViewController {
         
         registerCells()
         
-        tableViewCurrentWeather.delegate = self
-        tableViewCurrentWeather.dataSource = self
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,10 +42,8 @@ class CurrentWeatherViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
-            startActivityIndicator()
+            activityIndicator.startAnimating()
             loadCurrentWeather()
-        } else {
-           tableViewCurrentWeather.reloadData()
         }
     }
     
@@ -40,13 +51,15 @@ class CurrentWeatherViewController: UIViewController {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
         
         OpenWeatherAPI.requestCurrentWeather(completion: {(weather, error) in
-            if let receivedError = error {
+            if let weather = weather {
+                self.currentWeather = CurrentWeather(weather)
+                self.activityIndicator.stopAnimating()
+                self.tableViewCurrentWeather.isHidden = false
+                self.tableViewCurrentWeather.reloadData()
+            } else if let receivedError = error {
                 self.displayErrorAlert(receivedError.localizedDescription)
             } else {
-            self.weather = weather
-            self.stopActivityIndicator()
-            self.tableViewCurrentWeather.isHidden = false
-            self.tableViewCurrentWeather.reloadData()
+                self.displayErrorAlert("Нет данных")
             }
         })
     }
@@ -66,85 +79,50 @@ extension CurrentWeatherViewController: UITableViewDataSource {
         switch cellTypes[rowNumber] {
         case .CityName:
             let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let city = weather?.cityName {
-            cell.updateCity(name: city)
-            }
+            cell.updateCity(from: currentWeather)
             return cell
         case .TimeUpdated:
             let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let date = weather?.date {
-                cell.update(date: date)
-            }
+            cell.updateTime(from: currentWeather)
             return cell
         case .Description:
             let cell: DescriptionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(weather: weather)
+            cell.update(from: currentWeather)
             return cell
         case .Wind:
             let cell: WindTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.update(weather: weather)
+            cell.update(from: currentWeather)
             return cell
         case .Pressure:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let pressure = weather?.pressure {
-                let pressure = Pressure(value: pressure)
-                cell.update(pressure: pressure)
-            }
+            cell.updatePressure(from: currentWeather)
             return cell
         case .Humidity:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let humidity = weather?.humidity {
-            let humidity = Humidity(value: humidity)
-            cell.update(humidity: humidity)
-            }
+            cell.updateHumidity(from: currentWeather)
             return cell
         case .Sunrise:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let sunriseTime = weather?.sunriseTime{
-                cell.update(parameter: .sunrise, value: sunriseTime)
-            }
+            cell.update(parameter: .sunrise, from: currentWeather)
             return cell
         case .Sunset:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            if let sunsetTime = weather?.sunsetTime {
-                cell.update(parameter: .sunset, value: sunsetTime)
-            }
+            cell.update(parameter: .sunset, from: currentWeather)
             return cell
         }
     }
-    
+}
+
+extension CurrentWeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
 }
 
-extension CurrentWeatherViewController: UITableViewDelegate {
- 
-}
-
 extension CurrentWeatherViewController {
-    func startActivityIndicator() {
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = .gray
-        activityIndicator.color = UIColor.blue
-
-        DispatchQueue.main.async {
-            self.activityIndicator.center = self.view.center
-            self.view.addSubview(self.activityIndicator)
-            self.activityIndicator.startAnimating()
-        }
-    }
-    
-    func stopActivityIndicator() {
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
-        }
-    }
     
     func configureRowHeight() {
-        let estimatedRowHeight = CGFloat(0.15 * Double(tableViewCurrentWeather.bounds.height))
-        tableViewCurrentWeather.estimatedRowHeight = estimatedRowHeight
+        tableViewCurrentWeather.estimatedRowHeight = self.estimatedRowHeight
         tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
     }
     

@@ -19,16 +19,20 @@ class TimeUpdatedTableViewCell: UITableViewCell {
         updatedLabel.setFontSizeFitWidth()
         timeUpdated.setFontSizeFitWidth()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        timeUpdated.text = ""
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
     
-    func update(date: Date) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = SettingsManager.sharedInstance.dateAndTimeFormat
-        formatter.locale = SettingsManager.sharedInstance.locale
-        timeUpdated.text = formatter.string(from: date)
+    func updateTime(from weather: CurrentWeather?) {
+        if let dateAndTime = weather?.dateAndTime {
+            timeUpdated.text = dateAndTime
+        }
     }
 }

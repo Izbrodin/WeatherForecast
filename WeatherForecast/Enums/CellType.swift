@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum CellType {
     case CityName
@@ -17,4 +18,6 @@ enum CellType {
     case Humidity
     case Sunrise
     case Sunset
+    
+     static let allValues = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
 }

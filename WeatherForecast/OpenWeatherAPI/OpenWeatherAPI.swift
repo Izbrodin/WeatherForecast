@@ -17,13 +17,18 @@ class OpenWeatherAPI {
         let baseUrlCurrentWeather = SettingsManager.sharedInstance.baseUrlCurrentWeather
         let url = baseUrlCurrentWeather.addQueryItems(queryItems).build()!
         
-        Alamofire.request(url, method: .get).validate().responseJSON { response in
+        Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success(let value):
-                let weather = Mapper<Weather>().map(JSONObject: value)
-                completion(weather, nil)
+                if let weather = Mapper<Weather>().map(JSONObject: value) {
+                    DispatchQueue.main.async {
+                        completion(weather, nil)
+                    }
+                }
             case .failure(let error):
-                completion(nil, error)
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
             }
         }
     }
@@ -33,14 +38,18 @@ class OpenWeatherAPI {
         let baseUrlForecast5Days = SettingsManager.sharedInstance.baseUrlForecast5Days
         let url = baseUrlForecast5Days.addQueryItems(queryItems).build()!
         
-        Alamofire.request(url, method: .get).validate().responseJSON { response in
+        Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success(let value):
                 if let weatherForecast = Mapper<WeatherForecast>().map(JSONObject: value) {
-                    completion(weatherForecast, nil)
+                    DispatchQueue.main.async {
+                        completion(weatherForecast, nil)
+                    }
                 }
             case .failure(let error):
-                completion(nil, error)
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
             }
         }
     }

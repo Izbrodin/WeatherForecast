@@ -17,13 +17,21 @@ class CityNameTableViewCell: UITableViewCell {
         // Initialization code
         cityName.setFontSizeFitWidth()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cityName.text = ""
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
     
-    func updateCity(name: String) {
-        self.cityName.text = name
+    func updateCity(from weather: CurrentWeather?) {
+        if let cityName = weather?.cityName {
+          self.cityName.text = cityName
+        }
+        
     }
 }

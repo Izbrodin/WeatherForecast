@@ -20,45 +20,51 @@ class ParameterTableViewCell: UITableViewCell {
         parameterLabel.setFontSizeFitWidth()
         parameterValue.setFontSizeFitWidth()
     }
-
-    func update(pressure: Pressure?) {
-        if let description = pressure?.description {
-            setParameterName("Давление:")
-            setParameterValue(description)
-        }
-    }
-  
-    func update(humidity: Humidity?) {
-        if let description = humidity?.description {
-            setParameterName("Влажность:")
-            setParameterValue(description)
-        }
-    }
- 
-    func update(parameter: SunMode, value time: Date) {
-        let timeFormat = DateFormatter()
-        timeFormat.dateFormat = SettingsManager.sharedInstance.timeFormat
-        
-        switch parameter {
-        case .sunrise:
-             setParameterName("Рассвет:")
-                
-             let sunriseTimeFormatted = CustomDateFormatter.parseDate(time, timeFormat)
-             setParameterValue(sunriseTimeFormatted)
-        case .sunset:
-                setParameterName("Закат:")
-        
-                let sunsetTimeFormatted = CustomDateFormatter.parseDate(time, timeFormat)
-                setParameterValue(sunsetTimeFormatted)
-        }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        parameterLabel.text = ""
+        parameterValue.text = ""
     }
     
     private func setParameterName(_ parameterName: String) {
         parameterLabel.text = parameterName
     }
-        
+    
     private func setParameterValue(_ value: String) {
         parameterValue.text = value
+    }
+
+    func updatePressure(from weather: CurrentWeather?) {
+        if let description = weather?.pressure?.description {
+            setParameterName("Давление:")
+            setParameterValue(description)
+        }
+    }
+  
+    func updateHumidity(from weather: CurrentWeather?) {
+        if let description = weather?.humidity?.description {
+            setParameterName("Влажность:")
+            setParameterValue(description)
+        }
+    }
+ 
+    func update(parameter: SunMode, from weather: CurrentWeather?) {
+        let timeFormat = DateFormatter()
+        timeFormat.dateFormat = SettingsManager.sharedInstance.timeFormat
+        
+        switch parameter {
+        case .sunrise:
+            if let sunriseTime = weather?.sunriseTime {
+            setParameterName("Рассвет:")
+            setParameterValue(sunriseTime)
+            }
+        case .sunset:
+            if let sunsetTime = weather?.sunsetTime {
+            setParameterName("Закат:")
+            setParameterValue(sunsetTime)
+            }
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

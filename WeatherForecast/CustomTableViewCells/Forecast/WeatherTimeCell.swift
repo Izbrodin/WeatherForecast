@@ -23,10 +23,9 @@ class WeatherTimeCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func update(time: Date) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = SettingsManager.sharedInstance.timeFormat
-        dateFormatter.timeZone = SettingsManager.sharedInstance.timeZone
-        self.time.text = CustomDateFormatter.parseDate(time, dateFormatter)
+    func updateTime(from weather: CurrentWeather?) {
+        if let time = weather?.time {
+            self.time.text = time
+        }
     }
 }

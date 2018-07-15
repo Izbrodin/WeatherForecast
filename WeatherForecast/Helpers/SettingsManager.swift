@@ -13,7 +13,6 @@ class SettingsManager {
     var dateFormat = "E, d MMM"
     var dateAndTimeFormat = "E, d MMM yyyy HH:mm"
     var timeFormat = "HH:mm"
-    let dateFormatWithoutTime = "dd.MM.yyyy"
     //helps to avoid time offset if local time zone is GMT+
     let timeZone = TimeZone(secondsFromGMT: 0)!
     

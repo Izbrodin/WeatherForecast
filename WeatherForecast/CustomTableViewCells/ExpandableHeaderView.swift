@@ -9,15 +9,23 @@
 import Foundation
 import UIKit
 
-protocol ExpandableHeaderViewDelegate {
+protocol ExpandableHeaderViewDelegate: class {
     func toggleSection(header: ExpandableHeaderView, section: Int)
 }
 
 class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     @IBOutlet weak var titleLabel: UILabel!
-    var delegate: ExpandableHeaderViewDelegate?
-    var section: Int!
+    
+    private weak var delegate: ExpandableHeaderViewDelegate?
+    private var section: Int?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        section = nil
+        delegate = nil
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,10 +34,12 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     }
     
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer) {
-        delegate?.toggleSection(header: self, section: self.section)
+        if let section = section {
+            delegate?.toggleSection(header: self, section: section)
+        }
     }
             
-    func customInit(title: String, section: Int, delegate: ExpandableHeaderViewDelegate) {
+    func update(title: String, section: Int, delegate: ExpandableHeaderViewDelegate) {
         self.titleLabel.text = title
         self.section = section
         self.delegate = delegate

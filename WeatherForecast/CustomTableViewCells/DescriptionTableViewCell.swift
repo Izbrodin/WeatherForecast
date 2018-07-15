@@ -16,9 +16,6 @@ class DescriptionTableViewCell: UITableViewCell {
     @IBOutlet private var weatherDescription: UILabel!
     
     @IBOutlet private weak var temperature: UILabel!
-
-    private let apiIconPath = SettingsManager.sharedInstance.apiIconBaseUrl
-    private let iconExtension = SettingsManager.sharedInstance.apiIconExtension
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,16 +23,20 @@ class DescriptionTableViewCell: UITableViewCell {
         weatherDescription.setFontSizeFitWidth()
         temperature.setFontSizeFitWidth()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        weatherDescription.text = ""
+        temperature.text = ""
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
     
-    func update(weather: Weather?) {
-        if let iconName = weather?.icon {
-            let iconUrl = apiIconPath + iconName + iconExtension
-            let url = URL(string: iconUrl)
+    func update(from weather: CurrentWeather?) {
+        if let url = weather?.iconUrl {
             weatherImage.kf.setImage(with: url)
         }
         
@@ -43,8 +44,8 @@ class DescriptionTableViewCell: UITableViewCell {
             weatherDescription.text = conditions
         }
         
-        if let temperatureValue = weather?.temperature {
-            temperature.text = Temperature(value: temperatureValue).description
+        if let temperature = weather?.temperature {
+            self.temperature.text = temperature.description
         }
     }
 }

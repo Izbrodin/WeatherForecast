@@ -24,13 +24,14 @@ class WeatherForecast: Mappable {
 }
 
 extension WeatherForecast {
+
     func sortByDays() -> [[Weather]] {
         var weatherByDates: [[Weather]] = []
         var weatherForDate: [Weather] = []
         var currentDate: Date? = nil
         
         //sort weather list by date ascending
-        list.sort(by: { $0.date?.compare($1.date!) == .orderedAscending })
+        list.sort(by: { $0.date < $1.date })
         
         if let currDateFromAPI = list[0].date {
             currentDate = currDateFromAPI
@@ -42,7 +43,6 @@ extension WeatherForecast {
         dateFormatter.timeZone = SettingsManager.sharedInstance.timeZone
         
         for weather in list {
-            
             if let weatherDate = weather.date {
                 if !weatherDate.daysEqual(with: currentDate!) {
             
