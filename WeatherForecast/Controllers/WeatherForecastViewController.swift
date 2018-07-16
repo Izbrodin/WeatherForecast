@@ -49,6 +49,9 @@ class WeatherForecastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
+        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
+        
         registerCells()
         
         activityIndicator.center = view.center
