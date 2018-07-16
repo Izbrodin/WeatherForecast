@@ -14,6 +14,13 @@ class CurrentWeatherViewController: UIViewController {
         return indicator
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .blue
+        refreshControl.addTarget(self, action: #selector(loadCurrentWeather), for: .valueChanged)
+        return refreshControl
+    }()
+    
     private var previouslyDisplayedCity: String!
     private var weather: Weather?
     private var currentWeather: CurrentWeather?
@@ -30,6 +37,8 @@ class CurrentWeatherViewController: UIViewController {
         
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+        
+        tableViewCurrentWeather.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +56,7 @@ class CurrentWeatherViewController: UIViewController {
         }
     }
     
+    @objc
     func loadCurrentWeather() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
         
@@ -62,6 +72,7 @@ class CurrentWeatherViewController: UIViewController {
                 self.displayErrorAlert("Нет данных")
             }
         })
+        refreshControl.endRefreshing()
     }
 }
 

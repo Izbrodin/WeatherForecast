@@ -24,6 +24,13 @@ class WeatherForecastViewController: UIViewController {
         return indicator
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .blue
+        refreshControl.addTarget(self, action: #selector(loadForecastFor5Days), for: .valueChanged)
+        return refreshControl
+    }()
+    
     private var previouslyDisplayedCity: String = ""
     
     // Cell types which will be displayed in tableView
@@ -50,6 +57,8 @@ class WeatherForecastViewController: UIViewController {
         
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+        
+        tableViewWeatherForeCast.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,6 +79,7 @@ class WeatherForecastViewController: UIViewController {
         }
     }
     
+    @objc
     func loadForecastFor5Days() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
 
@@ -88,6 +98,7 @@ class WeatherForecastViewController: UIViewController {
                 self.displayErrorAlert("Нет данных")
             }
         })
+        refreshControl.endRefreshing()
     }
 }
 
