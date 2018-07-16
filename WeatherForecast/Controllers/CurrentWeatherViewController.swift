@@ -31,7 +31,6 @@ class CurrentWeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureRowHeight()
         
         registerCells()
         
@@ -131,12 +130,7 @@ extension CurrentWeatherViewController: UITableViewDelegate {
 }
 
 extension CurrentWeatherViewController {
-    
-    func configureRowHeight() {
-        tableViewCurrentWeather.estimatedRowHeight = self.estimatedRowHeight
-        tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
-    }
-    
+
     func registerCells() {
         tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)

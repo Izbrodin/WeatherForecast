@@ -38,21 +38,17 @@ class WeatherForecastViewController: UIViewController {
     
     // Weather object index in a SectionData array
     private var weatherIndex = 0
-    private var cellTypeLastIndex: Int = 0
     
     // Data for each table section
     private var tableData: [SectionData] = []
     
     private let estimatedRowHeight: CGFloat = 120
     private let estimatedSectionHeaderHeight: CGFloat = 98
+    private let heightForFooterInSection: CGFloat = 7
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //last index of cellTypes array
-        cellTypeLastIndex = cellTypes.count - 1
-        
-        configureRowHeight()
-        
+
         registerCells()
         
         activityIndicator.center = view.center
@@ -160,7 +156,7 @@ extension WeatherForecastViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 7
+        return heightForFooterInSection
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -172,14 +168,6 @@ extension WeatherForecastViewController: UITableViewDelegate {
 }
 
 extension WeatherForecastViewController {
-    
-    func configureRowHeight() {
-        //set estimated row height
-        tableViewWeatherForeCast.estimatedRowHeight = self.estimatedRowHeight
-        
-        //set automatic dimension of row height
-        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
-    }
     
     func invertSectionExpandedState(_ section: Int) {
         tableData[section].expanded = !tableData[section].expanded
