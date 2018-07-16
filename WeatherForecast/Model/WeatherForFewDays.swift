@@ -10,36 +10,49 @@ import Foundation
 
 class WeatherForFewDays {
     
-    private let nearestDatesSortedAscending: [Date]
-    private var weatherSortedByDates: [Date: [CurrentWeather]]
+    private var nearestDatesSortedAscending: [Date] = []
+    private var weatherSortedByDates = [Date: [CurrentWeather]]()
     
     init(_ weatherForecast: WeatherForecast) {
         var listOfWeather = weatherForecast.list
-        
+    
+        if listOfWeather.count>0 {
+            
         //sort weather by dates ascending
         listOfWeather.sort(by: { $0.date < $1.date })
         
         var listOfWeatherForFewDays: [CurrentWeather] = []
         
+        //
         listOfWeatherForFewDays = listOfWeather.map{ CurrentWeather($0) }
+            
+        //exclude objects without date
+        let listOfWeatherWithDateField = listOfWeatherForFewDays.filter{ $0.dateAtBeginningOfDay != nil }
+
+        //construct dictionary with weather grouped by day
+        weatherSortedByDates = listOfWeatherWithDateField.group(by: { $0.dateAtBeginningOfDay! })
         
-        weatherSortedByDates = listOfWeatherForFewDays.group(by: { $0.dateAtBeginningOfDay })
-        
+        //sort keys of a dictionary - dates ascending
         nearestDatesSortedAscending = weatherSortedByDates.keys.sorted(by: < )
+        }
     }
     
     func constructDataForTable() -> [SectionData] {
         var tableData: [SectionData] = []
         
+        if weatherSortedByDates.count>0 {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = SettingsManager.sharedInstance.dateFormat
         dateFormatter.locale = SettingsManager.sharedInstance.locale
-        
+            
         for day in nearestDatesSortedAscending {
             let title = CustomDateFormatter.parseDate(day, dateFormatter)
             
             if let weatherList = weatherSortedByDates[day] {
-                tableData.append(SectionData(title: title, weatherList: weatherList, expanded: false))
+                    let sectionData = SectionData(title: title, weatherList: weatherList, expanded: false)
+                    tableData.append(sectionData)
+                }
             }
         }
         return tableData

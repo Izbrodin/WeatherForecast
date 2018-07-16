@@ -21,7 +21,7 @@ struct CurrentWeather {
     var date: String?
     var dateAndTime: String?
     var time: String?
-    var dateAtBeginningOfDay = Date() //TO FIX!!!
+    var dateAtBeginningOfDay: Date?
     
     init(_ weather: Weather) {
         if let cityName = weather.cityName {
