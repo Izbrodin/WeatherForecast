@@ -22,8 +22,12 @@ class StartScreenController: UIViewController {
         let alertTitle = "Город"
         let alertMessage = "Введите название города"
         let alertTextFieldPlaceholder = "Название города"
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        
         let defaultCityName = "Penza"
+        
+        weak var alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+
+        if let alert = alert {
         
         alert.addTextField() { (textField) -> Void in
             textField.text = defaultCityName
@@ -55,6 +59,7 @@ class StartScreenController: UIViewController {
         alert.addAction(okAction)
         
         self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func selectTabWithIndex(_ tabIndex: Int) {
