@@ -10,8 +10,8 @@ import UIKit
 
 class ParameterTableViewCell: UITableViewCell {
 
-    @IBOutlet var parameterLabel: UILabel!
-    @IBOutlet var parameterValue: UILabel!
+    @IBOutlet weak private var parameterLabel: UILabel!
+    @IBOutlet weak private var parameterValue: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

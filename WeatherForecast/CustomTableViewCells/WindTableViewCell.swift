@@ -10,17 +10,17 @@ import UIKit
 
 class WindTableViewCell: UITableViewCell {
     
-    @IBOutlet private var arrowImage: UIImageView!
-    @IBOutlet weak var wLabel: UILabel!
-    @IBOutlet weak var eLabel: UILabel!
-    @IBOutlet weak var nLabel: UILabel!
-    @IBOutlet weak var sLabel: UILabel!
+    @IBOutlet weak private var arrowImage: UIImageView!
+    @IBOutlet weak private var wLabel: UILabel!
+    @IBOutlet weak private var eLabel: UILabel!
+    @IBOutlet weak private var nLabel: UILabel!
+    @IBOutlet weak private var sLabel: UILabel!
     
-    @IBOutlet private var windHeader: UILabel!
-    @IBOutlet private var directionLabel: UILabel!
-    @IBOutlet private var speedLabel: UILabel!
-    @IBOutlet private var direction: UILabel!
-    @IBOutlet private var speed: UILabel!
+    @IBOutlet weak private var windHeader: UILabel!
+    @IBOutlet weak private var directionLabel: UILabel!
+    @IBOutlet weak private var speedLabel: UILabel!
+    @IBOutlet weak private var direction: UILabel!
+    @IBOutlet weak private var speed: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

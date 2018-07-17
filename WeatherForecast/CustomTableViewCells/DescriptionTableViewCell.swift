@@ -11,11 +11,11 @@ import Kingfisher
 
 class DescriptionTableViewCell: UITableViewCell {
 
-    @IBOutlet private var weatherImage: UIImageView!
+    @IBOutlet weak private var weatherImage: UIImageView!
     
-    @IBOutlet private var weatherDescription: UILabel!
+    @IBOutlet weak private var weatherDescription: UILabel!
     
-    @IBOutlet private weak var temperature: UILabel!
+    @IBOutlet weak private var temperature: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

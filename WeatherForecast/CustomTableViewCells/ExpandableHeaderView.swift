@@ -15,9 +15,9 @@ protocol ExpandableHeaderViewDelegate: class {
 
 class ExpandableHeaderView: UITableViewHeaderFooterView {
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak private var titleLabel: UILabel!
     
-    private weak var delegate: ExpandableHeaderViewDelegate?
+    weak private var delegate: ExpandableHeaderViewDelegate?
     private var section: Int?
     
     override func prepareForReuse() {
