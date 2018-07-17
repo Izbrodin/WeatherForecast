@@ -29,7 +29,7 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.text = ""
+        titleLabel.text = nil
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
     }
     

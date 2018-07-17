@@ -23,8 +23,8 @@ class ParameterTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        parameterLabel.text = ""
-        parameterValue.text = ""
+        parameterLabel.text = nil
+        parameterValue.text = nil
     }
     
     private func setParameterName(_ parameterName: String) {

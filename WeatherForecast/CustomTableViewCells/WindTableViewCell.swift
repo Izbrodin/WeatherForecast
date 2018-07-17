@@ -45,8 +45,8 @@ class WindTableViewCell: UITableViewCell {
         //Set arrow in initial state before redrawing
         arrowImage.transform = CGAffineTransform(rotationAngle: 0)
         
-        direction.text = ""
-        speed.text = ""
+        direction.text = nil
+        speed.text = nil
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

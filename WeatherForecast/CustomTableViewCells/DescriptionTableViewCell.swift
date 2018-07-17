@@ -26,8 +26,8 @@ class DescriptionTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        weatherDescription.text = ""
-        temperature.text = ""
+        weatherDescription.text = nil
+        temperature.text = nil
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
