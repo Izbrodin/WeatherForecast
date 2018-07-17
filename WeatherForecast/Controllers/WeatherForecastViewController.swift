@@ -222,9 +222,9 @@ extension WeatherForecastViewController: ExpandableHeaderViewDelegate {
                 if self.tableData[i].expanded && i != section {
                     self.invertSectionExpandedState(i)
                     self.reloadSection(i)
+                    self.tableViewWeatherForeCast.reloadData()
                 }
             }
-            self.tableViewWeatherForeCast.reloadData()
         }
     }
 }
