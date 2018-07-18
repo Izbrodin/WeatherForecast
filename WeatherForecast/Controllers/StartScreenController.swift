@@ -25,7 +25,7 @@ class StartScreenController: UIViewController {
         
         let defaultCityName = "Penza"
         
-        var alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alert.addTextField() { (textField) -> Void in
             textField.text = defaultCityName

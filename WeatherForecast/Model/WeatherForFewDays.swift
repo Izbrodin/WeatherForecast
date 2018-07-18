@@ -10,43 +10,53 @@ import Foundation
 
 class WeatherForFewDays {
     
-    private var nearestDatesSortedAscending: [Date] = []
-    private var weatherSortedByDates = [Date: [CurrentWeather]]()
+    private var nearestDatesSortedAscending: [Date]
+    private var weatherSortedByDates: [Date: [CurrentWeather]]
     
     init(_ weatherForecast: WeatherForecast) {
         var listOfWeather = weatherForecast.list
-    
-        if listOfWeather.count>0 {
+
+        if listOfWeather.count > 0 {
             
-        //sort weather by dates ascending
-        listOfWeather.sort(by: { $0.date < $1.date })
-        
-        var listOfWeatherForFewDays: [CurrentWeather] = []
-        
-        //
-        listOfWeatherForFewDays = listOfWeather.map{ CurrentWeather($0) }
+            //exclude objects without date
+            listOfWeather = listOfWeather.filter{ $0.date != nil}
             
-        //exclude objects without date
-        let listOfWeatherWithDateField = listOfWeatherForFewDays.filter{ $0.dateAtBeginningOfDay != nil }
+            //sort weather by dates ascending
+            listOfWeather.sort(by: { $0.date < $1.date })
+            
+            let listOfWeatherForFewDays: [CurrentWeather] = listOfWeather.map{ CurrentWeather($0) }
+            
+            //exclude objects without date
+            let listOfWeatherWithDateField = listOfWeatherForFewDays.filter {
+                if $0.dateWithoutTime != nil { return true
+                } else {
+                    return false
+                }
+        }
 
         //construct dictionary with weather grouped by day
-        weatherSortedByDates = listOfWeatherWithDateField.group(by: { $0.dateAtBeginningOfDay! })
+        weatherSortedByDates = listOfWeatherWithDateField.group(by: { $0.dateWithoutTime! })
         
         //sort keys of a dictionary - dates ascending
         nearestDatesSortedAscending = weatherSortedByDates.keys.sorted(by: < )
+        }
+        else {
+            nearestDatesSortedAscending = []
+            weatherSortedByDates = [:]
         }
     }
     
     func constructDataForTable() -> [SectionData] {
         var tableData: [SectionData] = []
         
-        if weatherSortedByDates.count>0 {
+        if weatherSortedByDates.count > 0 {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = SettingsManager.sharedInstance.dateFormat
         dateFormatter.locale = SettingsManager.sharedInstance.locale
             
         for day in nearestDatesSortedAscending {
+            //Formatted date - title for section
             let title = CustomDateFormatter.parseDate(day, dateFormatter)
             
             if let weatherList = weatherSortedByDates[day] {
@@ -59,7 +69,7 @@ class WeatherForFewDays {
     }
     
     func indexIsValid(day: Int) -> Bool {
-        return day >= 0 && day <= weatherSortedByDates.count
+        return 0...weatherSortedByDates.count ~= day
     }
  
     subscript(index: Int) -> [CurrentWeather] {

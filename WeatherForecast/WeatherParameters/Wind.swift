@@ -9,9 +9,10 @@
 import Foundation
 
 struct Wind {
-    var degrees: Double? = nil
-    var speed: Double? = nil
-    private let directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+    let degrees: Double?
+    let speed: Double?
+    
+    static let directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
 }
 
 extension Wind {
@@ -30,7 +31,7 @@ extension Wind: CustomStringConvertible {
     var description: String {
         if let degrees = self.degrees {
             let i: Int = Int((degrees + 11.25) / 22.5)
-            return directions[i % 16]
+            return Wind.directions[i % 16]
         } else {
             return "no data about direction"
         }

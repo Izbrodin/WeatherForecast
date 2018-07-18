@@ -11,7 +11,7 @@ import Foundation
 struct CurrentWeather {
     var cityName: String?
     var temperature: Temperature?
-    var wind: Wind
+    var wind: Wind?
     var conditions: String?
     var pressure: Pressure?
     var humidity: Humidity?
@@ -21,7 +21,7 @@ struct CurrentWeather {
     var date: String?
     var dateAndTime: String?
     var time: String?
-    var dateAtBeginningOfDay: Date?
+    var dateWithoutTime: Date?
     
     init(_ weather: Weather) {
         if let cityName = weather.cityName {
@@ -32,18 +32,9 @@ struct CurrentWeather {
             self.temperature = Temperature(value: temperature)
         }
         
-        wind = Wind()
-        if let windDegrees = weather.windDegrees {
-            wind.degrees = windDegrees
-        }
+        wind = Wind(degrees: weather.windDegrees, speed: weather.windSpeed)
         
-        if let windSpeed = weather.windSpeed {
-            wind.speed = windSpeed
-        }
-        
-        if let conditions = weather.conditions {
-            self.conditions = conditions
-        }
+        self.conditions = weather.conditions
         
         if let pressure = weather.pressure {
             self.pressure = Pressure(value: pressure)
@@ -78,7 +69,7 @@ struct CurrentWeather {
             
             time = CustomDateFormatter.parseDate(date, timeFormat)
             
-            dateAtBeginningOfDay = date.dateAtBeginningOfDay()!
+            dateWithoutTime = date.dateWithoutTime()!
         }
     }
 }

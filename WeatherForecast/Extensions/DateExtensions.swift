@@ -9,16 +9,8 @@
 import Foundation
 
 extension Date {
-    
-    ///Checks if dates have the same day
-    func daysEqual(with date: Date) -> Bool {
-        var calendar = SettingsManager.sharedInstance.calendar
-        calendar.timeZone = SettingsManager.sharedInstance.timeZone
-        return calendar.compare(self, to: date, toGranularity: .day) == .orderedSame
-    }
-    
-    
-    func dateAtBeginningOfDay() -> Date? {
+
+    func dateWithoutTime() -> Date? {
         var calendar = Calendar.current
         
         calendar.timeZone = SettingsManager.sharedInstance.timeZone
@@ -29,8 +21,7 @@ extension Date {
         dateComps.hour = 0
         dateComps.minute = 0
         dateComps.second = 0
-        
-        // Convert back
+       
         let beginningOfDay = calendar.date(from: dateComps)
         return beginningOfDay
     }
