@@ -42,14 +42,12 @@ class WeatherForecastViewController: UIViewController {
     // Data for each table section
     private var tableData: [SectionData] = []
     
-    private let estimatedRowHeight: CGFloat = 120
-    private let estimatedSectionHeaderHeight: CGFloat = 98
+    private let sectionHeaderHeight: CGFloat = 98
     private let heightForFooterInSection: CGFloat = 7
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableViewWeatherForeCast.estimatedRowHeight = estimatedRowHeight
         tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
         
         registerCells()
@@ -151,7 +149,7 @@ extension WeatherForecastViewController: UITableViewDataSource {
 extension WeatherForecastViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return estimatedSectionHeaderHeight
+        return sectionHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

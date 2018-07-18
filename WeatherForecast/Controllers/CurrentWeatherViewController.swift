@@ -27,13 +27,8 @@ class CurrentWeatherViewController: UIViewController {
     
     private let cellTypes = CellType.allValues
     
-    private let estimatedRowHeight: CGFloat = 120
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableViewCurrentWeather.estimatedRowHeight = estimatedRowHeight
-        tableViewCurrentWeather.rowHeight = UITableViewAutomaticDimension
         
         registerCells()
         
