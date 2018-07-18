@@ -60,6 +60,7 @@ extension Weather: CustomStringConvertible {
         if let date = date {
         properties["dateAndTime"] = CustomDateFormatter.parseDate(date, formatter)
         }
+        
         if let conditions = conditions {
         properties["conditions"] = conditions
         }
