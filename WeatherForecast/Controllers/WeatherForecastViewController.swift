@@ -199,32 +199,24 @@ extension WeatherForecastViewController {
 extension WeatherForecastViewController: ExpandableHeaderViewDelegate {
     
     func toggleSection(header: ExpandableHeaderView, section: Int) {
-        //change state of currently expanded sections and hide them
-        let sectionsCount = tableData.count
         
+        //change state of tapped section
         invertSectionExpandedState(section)
         
-        if tableData[section].expanded {
-            //scroll first row of section at the top
-            DispatchQueue.main.async {
-                self.reloadSection(section)
-                let indexPath = IndexPath(row: 0, section: section)
-                self.tableViewWeatherForeCast.scrollToRow(at: indexPath, at: .top, animated: true)
-            }
-            
-            DispatchQueue.main.async {
-                self.tableViewWeatherForeCast.reloadData()
-            }
-        }
+        let countOfRows = tableData[section].weatherList.count * cellTypes.count
+        let indexPaths = (0..<countOfRows).map { i in return IndexPath(item: i, section: section)  }
         
-        DispatchQueue.main.async {
-            for i in 0..<sectionsCount {
-                if self.tableData[i].expanded && i != section {
-                    self.invertSectionExpandedState(i)
-                    self.reloadSection(i)  
-                }
-            }
-            self.tableViewWeatherForeCast.reloadData()
+        if tableData[section].expanded {
+            tableViewWeatherForeCast.beginUpdates()
+            tableViewWeatherForeCast?.insertRows(at: indexPaths, with: .fade)
+            tableViewWeatherForeCast.endUpdates()
+            let indexPath = IndexPath(row: 0, section: section)
+            tableViewWeatherForeCast.scrollToRow(at: indexPath, at: .top, animated: false)
+            
+        } else {
+            tableViewWeatherForeCast.beginUpdates()
+            tableViewWeatherForeCast?.deleteRows(at: indexPaths, with: .fade)
+            tableViewWeatherForeCast.endUpdates()
         }
     }
 }
