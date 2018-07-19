@@ -28,10 +28,7 @@ class CityNameTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func updateCity(from weather: CurrentWeather?) {
-        if let cityName = weather?.cityName {
-          self.cityName.text = cityName
-        }
-        
+    func updateCity() {
+        self.cityName.text = SettingsManager.sharedInstance.cityName
     }
 }

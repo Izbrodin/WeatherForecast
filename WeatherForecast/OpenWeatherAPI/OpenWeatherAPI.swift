@@ -8,21 +8,23 @@
 
 import Foundation
 import Alamofire
-import ObjectMapper
 
 class OpenWeatherAPI {
     
-    static func requestCurrentWeather(completion: @escaping (Weather?, Error?) -> ()) {
+    static func requestCurrentWeather(completion: @escaping (WeatherCodeable?, Error?) -> ()) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlCurrentWeather = SettingsManager.sharedInstance.baseUrlCurrentWeather
         let url = baseUrlCurrentWeather.addQueryItems(queryItems).build()!
         
         Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
-            case .success(let value):
-                if let weather = Mapper<Weather>().map(JSONObject: value) {
+            case .success:
+                if let jsonData = response.data {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .secondsSince1970
+                    let codableWeather = try? decoder.decode(WeatherCodeable.self, from: jsonData)
                     DispatchQueue.main.async {
-                        completion(weather, nil)
+                        completion(codableWeather, nil)
                     }
                 }
             case .failure(let error):
@@ -33,17 +35,20 @@ class OpenWeatherAPI {
         }
     }
     
-    static func requestForecastFor5Days(completion: @escaping (WeatherForecast?, Error?) -> ()) {
+    static func requestForecastFor5Days(completion: @escaping (WeatherForecastCodeable?, Error?) -> ()) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlForecast5Days = SettingsManager.sharedInstance.baseUrlForecast5Days
         let url = baseUrlForecast5Days.addQueryItems(queryItems).build()!
         
         Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
-            case .success(let value):
-                if let weatherForecast = Mapper<WeatherForecast>().map(JSONObject: value) {
+            case .success:
+                if let jsonData = response.data {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .secondsSince1970
+                    let weatherForecastCodable = try? decoder.decode(WeatherForecastCodeable.self, from: jsonData)
                     DispatchQueue.main.async {
-                        completion(weatherForecast, nil)
+                        completion(weatherForecastCodable, nil)
                     }
                 }
             case .failure(let error):

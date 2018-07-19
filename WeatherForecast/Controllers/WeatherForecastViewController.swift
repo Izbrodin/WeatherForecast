@@ -189,7 +189,7 @@ extension WeatherForecastViewController {
         tableViewWeatherForeCast.register(headerClass: ExpandableHeaderView.self)
     }
     
-    func constructTableViewSections(_ weatherForecast: WeatherForecast) {
+    func constructTableViewSections(_ weatherForecast: WeatherForecastCodeable) {
         tableData = WeatherForFewDays(weatherForecast).constructDataForTable()
     }
 }

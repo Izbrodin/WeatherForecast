@@ -13,9 +13,9 @@ class WeatherForFewDays {
     private var nearestDatesSortedAscending: [Date]
     private var weatherSortedByDates: [Date: [CurrentWeather]]
     
-    init(_ weatherForecast: WeatherForecast) {
-        var listOfWeather = weatherForecast.list
-
+    init(_ weatherForecast: WeatherForecastCodeable) {
+        var listOfWeather = weatherForecast.listOfWeather
+        
         if listOfWeather.count > 0 {
             
             //exclude objects without date
@@ -32,13 +32,13 @@ class WeatherForFewDays {
                 } else {
                     return false
                 }
-        }
-
-        //construct dictionary with weather grouped by day
-        weatherSortedByDates = listOfWeatherWithDateField.group(by: { $0.dateWithoutTime! })
-        
-        //sort keys of a dictionary - dates ascending
-        nearestDatesSortedAscending = weatherSortedByDates.keys.sorted(by: < )
+            }
+            
+            //construct dictionary with weather grouped by day
+            weatherSortedByDates = listOfWeatherWithDateField.group(by: { $0.dateWithoutTime! })
+            
+            //sort keys of a dictionary - dates ascending
+            nearestDatesSortedAscending = weatherSortedByDates.keys.sorted(by: < )
         }
         else {
             nearestDatesSortedAscending = []

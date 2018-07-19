@@ -23,10 +23,7 @@ struct CurrentWeather {
     var time: String?
     var dateWithoutTime: Date?
     
-    init(_ weather: Weather) {
-        if let cityName = weather.cityName {
-            self.cityName = cityName
-        }
+    init(_ weather: WeatherCodeable) {
         
         if let temperature = weather.temperature {
             self.temperature = Temperature(value: temperature)
@@ -57,7 +54,7 @@ struct CurrentWeather {
         
         if let iconName = weather.icon {
             let iconUrlString = SettingsManager.sharedInstance.apiIconBaseUrl + iconName + SettingsManager.sharedInstance.apiIconExtension
-                iconUrl = URL(string: iconUrlString)
+            iconUrl = URL(string: iconUrlString)
         }
         
         if let date = weather.date {

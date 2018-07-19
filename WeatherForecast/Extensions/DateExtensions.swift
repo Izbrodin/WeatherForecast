@@ -11,10 +11,8 @@ import Foundation
 extension Date {
 
     func dateWithoutTime() -> Date? {
-        var calendar = Calendar.current
-        
-        calendar.timeZone = SettingsManager.sharedInstance.timeZone
-        
+        var calendar = SettingsManager.sharedInstance.calendar
+              
         // Selectively convert the date components (year, month, day) of the input date
         var dateComps = calendar.dateComponents([.year, .month, .day], from: self)
         // Set the time components manually

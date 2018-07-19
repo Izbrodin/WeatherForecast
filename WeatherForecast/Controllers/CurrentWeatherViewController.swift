@@ -22,7 +22,7 @@ class CurrentWeatherViewController: UIViewController {
     }()
     
     private var previouslyDisplayedCity: String!
-    private var weather: Weather?
+    private var weather: WeatherCodeable?
     private var currentWeather: CurrentWeather?
     
     private let cellTypes = CellType.allValues
@@ -56,7 +56,7 @@ class CurrentWeatherViewController: UIViewController {
     @objc
     func loadCurrentWeather() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
-        
+
         OpenWeatherAPI.requestCurrentWeather(completion: {(weather, error) in
             if let weather = weather {
                 self.currentWeather = CurrentWeather(weather)
@@ -87,7 +87,7 @@ extension CurrentWeatherViewController: UITableViewDataSource {
         switch cellTypes[rowNumber] {
         case .CityName:
             let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.updateCity(from: currentWeather)
+            cell.updateCity()
             return cell
         case .TimeUpdated:
             let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
