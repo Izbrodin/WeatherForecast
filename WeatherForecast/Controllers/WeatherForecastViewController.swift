@@ -19,14 +19,14 @@ class WeatherForecastViewController: UIViewController {
         
         indicator.hidesWhenStopped = true
         indicator.activityIndicatorViewStyle = .gray
-        indicator.color = UIColor.blue
+        indicator.color = UIColor.gray
         
         return indicator
     }()
     
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .blue
+        refreshControl.tintColor = .gray
         refreshControl.addTarget(self, action: #selector(loadForecastFor5Days), for: .valueChanged)
         return refreshControl
     }()
