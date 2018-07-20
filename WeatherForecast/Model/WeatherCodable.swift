@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherCodeable: Decodable {
+struct WeatherCodeable: Codable {
     var temperature: Double?
     var conditions: String?
     var windDegrees: Double?
@@ -63,8 +63,30 @@ extension WeatherCodeable {
         self.humidity = try? main.decode(Double.self, forKey: .humidity)
         self.sunriseTime = try? systemInfo.decode(Date.self, forKey: .sunrise)
         self.sunsetTime = try? systemInfo.decode(Date.self, forKey: .sunset)
-        
         self.icon = try? weatherParameters.decode(String.self, forKey: .icon)
         self.date = try? container.decode(Date.self, forKey: .date)
+    }
+
+    func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            var weather = try container.nestedUnkeyedContainer(forKey: .weather)
+            var weatherParameters = try weather.nestedContainer(keyedBy: CodingKeys.WeatherParameters.self)
+            
+            var main = try container.nestedContainer(keyedBy: CodingKeys.MainParameters.self, forKey: .mainParameters)
+            
+            var wind = try container.nestedContainer(keyedBy: CodingKeys.WindParameters.self, forKey: .wind)
+            
+            var systemInfo = try container.nestedContainer(keyedBy: CodingKeys.SystemParameters.self, forKey: .systemInfo)
+            
+            try? main.encode(temperature, forKey: .temperature)
+            try? weatherParameters.encode(conditions, forKey: .description)
+            try? wind.encode(windDegrees, forKey: .degrees)
+            try? wind.encode(windSpeed, forKey: .speed)
+            try? main.encode(pressure, forKey: .pressure)
+            try? main.encode(humidity, forKey: .humidity)
+            try? systemInfo.encode(sunriseTime, forKey: .sunrise)
+            try? systemInfo.encode(sunsetTime, forKey: .sunset)
+            try? weatherParameters.encode(icon, forKey: .icon)
+            try? container.encode(date, forKey: .date)
     }
 }
