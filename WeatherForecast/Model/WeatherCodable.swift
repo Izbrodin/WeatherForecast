@@ -69,14 +69,14 @@ extension WeatherCodeable {
 
     func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            var weather = try container.nestedUnkeyedContainer(forKey: .weather)
-            var weatherParameters = try weather.nestedContainer(keyedBy: CodingKeys.WeatherParameters.self)
+            var weather = container.nestedUnkeyedContainer(forKey: .weather)
+            var weatherParameters = weather.nestedContainer(keyedBy: CodingKeys.WeatherParameters.self)
             
-            var main = try container.nestedContainer(keyedBy: CodingKeys.MainParameters.self, forKey: .mainParameters)
+            var main = container.nestedContainer(keyedBy: CodingKeys.MainParameters.self, forKey: .mainParameters)
             
-            var wind = try container.nestedContainer(keyedBy: CodingKeys.WindParameters.self, forKey: .wind)
+            var wind = container.nestedContainer(keyedBy: CodingKeys.WindParameters.self, forKey: .wind)
             
-            var systemInfo = try container.nestedContainer(keyedBy: CodingKeys.SystemParameters.self, forKey: .systemInfo)
+            var systemInfo = container.nestedContainer(keyedBy: CodingKeys.SystemParameters.self, forKey: .systemInfo)
             
             try? main.encode(temperature, forKey: .temperature)
             try? weatherParameters.encode(conditions, forKey: .description)
