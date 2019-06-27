@@ -15,8 +15,8 @@ class OpenWeatherAPI {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlCurrentWeather = SettingsManager.sharedInstance.baseUrlCurrentWeather
         let url = baseUrlCurrentWeather.addQueryItems(queryItems).build()!
-        
-        Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
+
+        AF.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success:
                 if let jsonData = response.data {
@@ -40,7 +40,7 @@ class OpenWeatherAPI {
         let baseUrlForecast5Days = SettingsManager.sharedInstance.baseUrlForecast5Days
         let url = baseUrlForecast5Days.addQueryItems(queryItems).build()!
         
-        Alamofire.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
+        AF.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success:
                 if let jsonData = response.data {
