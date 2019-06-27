@@ -18,7 +18,7 @@ class WeatherForecastViewController: UIViewController {
         let indicator = UIActivityIndicatorView()
         
         indicator.hidesWhenStopped = true
-        indicator.activityIndicatorViewStyle = .gray
+        indicator.style = .gray
         indicator.color = UIColor.gray
         
         return indicator
@@ -48,7 +48,7 @@ class WeatherForecastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableViewWeatherForeCast.rowHeight = UITableViewAutomaticDimension
+        tableViewWeatherForeCast.rowHeight = UITableView.automaticDimension
         
         registerCells()
         
@@ -153,7 +153,7 @@ extension WeatherForecastViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

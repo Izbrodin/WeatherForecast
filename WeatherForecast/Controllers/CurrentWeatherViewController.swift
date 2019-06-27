@@ -8,7 +8,7 @@ class CurrentWeatherViewController: UIViewController {
         let indicator = UIActivityIndicatorView()
         
         indicator.hidesWhenStopped = true
-        indicator.activityIndicatorViewStyle = .gray
+        indicator.style = .gray
         indicator.color = UIColor.gray
         
         return indicator
@@ -123,7 +123,7 @@ extension CurrentWeatherViewController: UITableViewDataSource {
 
 extension CurrentWeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 }
 
