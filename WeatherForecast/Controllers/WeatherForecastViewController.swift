@@ -80,21 +80,21 @@ class WeatherForecastViewController: UIViewController {
     func loadForecastFor5Days() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
 
-        OpenWeatherAPI.requestForecastFor5Days(completion: { (forecast, error) in
+        OpenWeatherAPI.requestForecastFor5Days(completion: { [weak self] (forecast, error) in
+            self?.activityIndicator.stopAnimating()
             if let forecast = forecast {
-                self.cityNameLabel.text = SettingsManager.sharedInstance.cityName
-                self.constructTableViewSections(forecast)
-                
-                self.tableViewWeatherForeCast.isHidden = false
-                self.cityNameLabel.isHidden = false
-                self.tableViewWeatherForeCast.reloadData()
-                self.activityIndicator.stopAnimating()
+                self?.cityNameLabel.text = SettingsManager.sharedInstance.cityName
+                self?.constructTableViewSections(forecast)
+                self?.tableViewWeatherForeCast.isHidden = false
+                self?.cityNameLabel.isHidden = false
+                self?.tableViewWeatherForeCast.reloadData()
             } else if let receivedError = error {
-                self.displayErrorAlert(receivedError.localizedDescription)
+                self?.displayErrorAlert(receivedError.localizedDescription)
             } else {
-                self.displayErrorAlert("Нет данных")
+                self?.displayErrorAlert("Нет данных")
             }
         })
+        
         refreshControl.endRefreshing()
     }
 }

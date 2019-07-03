@@ -1,16 +1,14 @@
 import UIKit
 
-class CurrentWeatherViewController: UIViewController {
+class CurrentWeatherViewController: UIViewController, CustomNavigationTitleHaving {
     
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
-        
         indicator.hidesWhenStopped = true
         indicator.style = .gray
         indicator.color = UIColor.gray
-        
         return indicator
     }()
     
@@ -24,18 +22,17 @@ class CurrentWeatherViewController: UIViewController {
     private var previouslyDisplayedCity: String!
     private var weather: WeatherCodeable?
     private var currentWeather: CurrentWeather?
-    
     private let cellTypes = CellType.allValues
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = SettingsManager.sharedInstance.cityName
+        setupCustomNavigationItemTitle(fontSize: 15, color: UIColor.green)
         registerCells()
-        
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
-        
         tableViewCurrentWeather.refreshControl = refreshControl
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,20 +50,19 @@ class CurrentWeatherViewController: UIViewController {
         }
     }
     
-    @objc
-    func loadCurrentWeather() {
+    @objc func loadCurrentWeather() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
 
-        OpenWeatherAPI.requestCurrentWeather(completion: {(weather, error) in
+        OpenWeatherAPI.requestCurrentWeather(completion: { [weak self] (weather, error) in
+            self?.activityIndicator.stopAnimating()
             if let weather = weather {
-                self.currentWeather = CurrentWeather(weather)
-                self.activityIndicator.stopAnimating()
-                self.tableViewCurrentWeather.isHidden = false
-                self.tableViewCurrentWeather.reloadData()
+                self?.currentWeather = CurrentWeather(weather)
+                self?.tableViewCurrentWeather.isHidden = false
+                self?.tableViewCurrentWeather.reloadData()
             } else if let receivedError = error {
-                self.displayErrorAlert(receivedError.localizedDescription)
+                self?.displayErrorAlert(receivedError.localizedDescription)
             } else {
-                self.displayErrorAlert("Нет данных")
+                self?.displayErrorAlert("Нет данных")
             }
         })
         refreshControl.endRefreshing()
@@ -85,10 +81,6 @@ extension CurrentWeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowNumber = indexPath.row
         switch cellTypes[rowNumber] {
-        case .CityName:
-            let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.updateCity()
-            return cell
         case .TimeUpdated:
             let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.updateTime(from: currentWeather)
@@ -130,11 +122,9 @@ extension CurrentWeatherViewController: UITableViewDelegate {
 extension CurrentWeatherViewController {
 
     func registerCells() {
-        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: TimeUpdatedTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: DescriptionTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: WindTableViewCell.self)
-        tableViewCurrentWeather.register(cellClass: CityNameTableViewCell.self)
         tableViewCurrentWeather.register(cellClass: ParameterTableViewCell.self)
     }
 }
