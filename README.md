@@ -1,2 +1,2 @@
 # WeatherForecast
-Weather app based on OpenWeatherMap API
+Weather app using OpenWeatherMap API
