@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,11 +14,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xy9-BT-f07">
-                        <rect key="frame" x="113.5" y="16" width="149.5" height="42"/>
+                        <rect key="frame" x="113" y="10" width="149.5" height="55"/>
                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -28,14 +26,15 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="xy9-BT-f07" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KB7-Kn-O1X"/>
-                    <constraint firstItem="xy9-BT-f07" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wfq-hA-Rzj"/>
+                    <constraint firstItem="xy9-BT-f07" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Kqg-KR-prd"/>
+                    <constraint firstAttribute="bottom" secondItem="xy9-BT-f07" secondAttribute="bottom" constant="10" id="uaQ-hH-isH"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="cityName" destination="xy9-BT-f07" id="JC0-oS-seW"/>
             </connections>
-            <point key="canvasLocation" x="30.5" y="67.5"/>
+            <point key="canvasLocation" x="29.600000000000001" y="67.016491754122939"/>
         </tableViewCell>
     </objects>
 </document>
