@@ -14,31 +14,31 @@ protocol ExpandableHeaderViewDelegate: class {
 }
 
 class ExpandableHeaderView: UITableViewHeaderFooterView {
-    
+
     @IBOutlet weak private var titleLabel: UILabel!
-    
+
     weak private var delegate: ExpandableHeaderViewDelegate?
     private var section: Int?
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         section = nil
         delegate = nil
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.text = nil
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
     }
-    
+
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer) {
         if let section = section {
             delegate?.toggleSection(header: self, section: section)
         }
     }
-            
+
     func update(title: String, section: Int, delegate: ExpandableHeaderViewDelegate) {
         self.titleLabel.text = title
         self.section = section

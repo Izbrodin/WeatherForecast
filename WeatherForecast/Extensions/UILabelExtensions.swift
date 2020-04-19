@@ -9,11 +9,10 @@
 import UIKit
 
 extension UILabel {
-    
+
     func setFontSizeFitWidth() {
         self.minimumScaleFactor = 0.5
         self.adjustsFontSizeToFitWidth = true
         self.numberOfLines = 1
     }
 }
-

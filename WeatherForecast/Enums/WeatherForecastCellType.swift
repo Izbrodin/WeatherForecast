@@ -8,14 +8,10 @@
 
 import Foundation
 
-enum WeatherForecastCellType {
-    case Time
-    case Description
-    case Wind
-    case Pressure
-    case Humidity
-    
-    static let allValues = [WeatherForecastCellType.Time, WeatherForecastCellType.Description, WeatherForecastCellType.Wind, WeatherForecastCellType.Pressure, WeatherForecastCellType.Humidity]
+public enum WeatherForecastCellType: CaseIterable {
+    case time
+    case description
+    case wind
+    case pressure
+    case humidity
 }
-
-

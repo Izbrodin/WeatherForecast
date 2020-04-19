@@ -11,12 +11,12 @@ import UIKit
 class WeatherTimeCell: UITableViewCell {
 
     @IBOutlet weak private var time: UILabel!
-   
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         time.text = nil
@@ -27,7 +27,7 @@ class WeatherTimeCell: UITableViewCell {
         time.setFontSizeFitWidth()
         // Configure the view for the selected state
     }
-    
+
     func updateTime(from weather: CurrentWeather?) {
         if let time = weather?.time {
             self.time.text = time

@@ -25,9 +25,9 @@ class Weather: Mappable {
     required init?(map: Map) {
 
     }
-    
+
     init?() {
-        
+
     }
 
     func mapping(map: Map) {
@@ -48,47 +48,47 @@ class Weather: Mappable {
 extension Weather: CustomStringConvertible {
     var description: String {
         var properties: [String: String] = [:]
-        
+
         if let temperature = temperature {
         properties["temperature"] = Temperature(value: temperature).description
         }
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = SettingsManager.sharedInstance.dateAndTimeFormat
         formatter.locale = SettingsManager.sharedInstance.locale
-        
+
         if let date = date {
         properties["dateAndTime"] = CustomDateFormatter.parseDate(date, formatter)
         }
-        
+
         if let conditions = conditions {
         properties["conditions"] = conditions
         }
-        
+
         if let windSpeed = windSpeed {
         properties["wind.speed"] = String(windSpeed)
         }
-            
+
         if let pressure = pressure {
         properties["pressure"] = String(pressure)
         }
-            
+
         if let humidity = humidity {
         properties["humidity"] = String(humidity)
         }
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = SettingsManager.sharedInstance.timeFormat
-        
+
         if let sunriseTime = sunriseTime {
             properties["sunriseTime"] = CustomDateFormatter.parseDate(sunriseTime, dateFormatter)
         }
         if let sunsetTime = sunsetTime {
             properties["sunsetTIme"] = CustomDateFormatter.parseDate(sunsetTime, dateFormatter)
         }
-        
+
         var propertiesString = ""
-            
+
         for (propertyName, propertyValue) in properties {
             let string = propertyName + ": " + propertyValue + "\n"
             propertiesString.append(string)

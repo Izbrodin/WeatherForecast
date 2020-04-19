@@ -11,29 +11,45 @@ import Foundation
 struct Wind {
     let degrees: Double?
     let speed: Double?
-    
-    static let directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+
+    private enum Constants {
+        static let directions = ["N",
+                                 "NNE",
+                                 "NE",
+                                 "ENE",
+                                 "E",
+                                 "ESE",
+                                 "SE",
+                                 "SSE",
+                                 "S",
+                                 "SSW",
+                                 "SW",
+                                 "WSW",
+                                 "W",
+                                 "WNW",
+                                 "NW",
+                                 "NNW"]
+        static let compassSectorLength = 22.5
+        static let offsetToFixNNE = 11.25
+    }
 }
 
 extension Wind {
-    
+
     var speedFormatted: String {
-        if let speedValue = self.speed {
-            return String(speedValue) + " м/с"
-        } else {
-            return "no data about speed"
+        guard let speedValue = self.speed else {
+             return "no data about speed"
         }
+        return String(speedValue) + " м/с"
     }
 }
 
 extension Wind: CustomStringConvertible {
-    
     var description: String {
-        if let degrees = self.degrees {
-            let i: Int = Int((degrees + 11.25) / 22.5)
-            return Wind.directions[i % 16]
-        } else {
+        guard let degrees = self.degrees else {
             return "no data about direction"
         }
+        let index = Int((degrees + Constants.offsetToFixNNE) / Constants.compassSectorLength)
+        return Constants.directions[index % 16]
     }
 }

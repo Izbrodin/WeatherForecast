@@ -12,18 +12,18 @@ import Kingfisher
 class DescriptionTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var weatherImage: UIImageView!
-    
+
     @IBOutlet weak private var weatherDescription: UILabel!
-    
+
     @IBOutlet weak private var temperature: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         weatherDescription.setFontSizeFitWidth()
         temperature.setFontSizeFitWidth()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         weatherDescription.text = nil
@@ -34,16 +34,16 @@ class DescriptionTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
+
     func update(from weather: CurrentWeather?) {
         if let url = weather?.iconUrl {
             weatherImage.kf.setImage(with: url)
         }
-        
-        if let conditions = weather?.conditions{
+
+        if let conditions = weather?.conditions {
             weatherDescription.text = conditions
         }
-        
+
         if let temperature = weather?.temperature {
             self.temperature.text = temperature.description
         }

@@ -9,15 +9,13 @@
 import Foundation
 import UIKit
 
-enum CellType {
-    case CityName
-    case TimeUpdated
-    case Description
-    case Wind
-    case Pressure
-    case Humidity
-    case Sunrise
-    case Sunset
-    
-     static let allValues = [CellType.CityName, CellType.TimeUpdated, CellType.Description, CellType.Wind, CellType.Pressure, CellType.Humidity, CellType.Sunrise, CellType.Sunset]
+enum CellType: CaseIterable {
+    case cityName
+    case timeUpdated
+    case description
+    case wind
+    case pressure
+    case humidity
+    case sunrise
+    case sunset
 }

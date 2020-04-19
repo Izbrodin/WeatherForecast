@@ -12,13 +12,12 @@ struct SectionData {
     let title: String
     let weatherList: [CurrentWeather]
     var expanded: Bool
-    
+
     var count: Int {
         return weatherList.count
     }
-    
+
     subscript(index: Int) -> CurrentWeather {
         return weatherList[index]
     }
 }
-

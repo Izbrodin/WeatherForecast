@@ -10,13 +10,14 @@ import Foundation
 import Alamofire
 
 class OpenWeatherAPI {
-    
-    static func requestCurrentWeather(completion: @escaping (WeatherCodeable?, Error?) -> ()) {
+
+    static func requestCurrentWeather(completion: @escaping (WeatherCodeable?, Error?) -> Void) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlCurrentWeather = SettingsManager.sharedInstance.baseUrlCurrentWeather
         let url = baseUrlCurrentWeather.addQueryItems(queryItems).build()!
 
-        AF.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
+        AF.request(url, method: .get).validate()
+            .responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success:
                 if let jsonData = response.data {
@@ -34,13 +35,14 @@ class OpenWeatherAPI {
             }
         }
     }
-    
-    static func requestForecastFor5Days(completion: @escaping (WeatherForecastCodeable?, Error?) -> ()) {
+
+    static func requestForecastFor5Days(completion: @escaping (WeatherForecastCodeable?, Error?) -> Void) {
         let queryItems: [URLQueryItem] = constructUrlParameters()
         let baseUrlForecast5Days = SettingsManager.sharedInstance.baseUrlForecast5Days
         let url = baseUrlForecast5Days.addQueryItems(queryItems).build()!
-        
-        AF.request(url, method: .get).validate().responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
+
+        AF.request(url, method: .get).validate()
+            .responseJSON(queue: DispatchQueue.global(qos: .background)) { response in
             switch response.result {
             case .success:
                 if let jsonData = response.data {
@@ -58,14 +60,14 @@ class OpenWeatherAPI {
             }
         }
     }
-    
+
     private static func constructUrlParameters() -> [URLQueryItem] {
         //take parameters from Settings manager
         let cityName = SettingsManager.sharedInstance.cityName
         let languageIndex = SettingsManager.sharedInstance.languageIndex
         let units =  SettingsManager.sharedInstance.units
         let appId = SettingsManager.sharedInstance.appId
-        
+
         //construct array of query parameters
         var queryItems: [URLQueryItem] = []
         queryItems.append(URLQueryItem(name: "q", value: cityName))

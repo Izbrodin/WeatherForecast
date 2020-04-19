@@ -15,22 +15,22 @@ class ParameterTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         // Initialization code
         parameterLabel.setFontSizeFitWidth()
         parameterValue.setFontSizeFitWidth()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         parameterLabel.text = nil
         parameterValue.text = nil
     }
-    
+
     private func setParameterName(_ parameterName: String) {
         parameterLabel.text = parameterName
     }
-    
+
     private func setParameterValue(_ value: String) {
         parameterValue.text = value
     }
@@ -41,18 +41,18 @@ class ParameterTableViewCell: UITableViewCell {
             setParameterValue(description)
         }
     }
-  
+
     func updateHumidity(from weather: CurrentWeather?) {
         if let description = weather?.humidity?.description {
             setParameterName("Влажность:")
             setParameterValue(description)
         }
     }
- 
+
     func update(parameter: SunMode, from weather: CurrentWeather?) {
         let timeFormat = DateFormatter()
         timeFormat.dateFormat = SettingsManager.sharedInstance.timeFormat
-        
+
         switch parameter {
         case .sunrise:
             if let sunriseTime = weather?.sunriseTime {
@@ -66,7 +66,7 @@ class ParameterTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
