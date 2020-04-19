@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74935C98244CB5D900104A76 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935C97244CB5D900104A76 /* Data.swift */; };
 		8414368720BD70ED0079D315 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414368620BD70ED0079D315 /* URLBuilder.swift */; };
 		8423992720B5A8BD009102CE /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423992620B5A8BD009102CE /* Wind.swift */; };
 		8423992920B5AA5F009102CE /* Pressure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423992820B5AA5F009102CE /* Pressure.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		0370F432C6A43AB6A8F5BE9A /* Pods-WeatherForecast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecast/Pods-WeatherForecast.debug.xcconfig"; sourceTree = "<group>"; };
 		16CC22E5A12D117873BB1BD8 /* Pods-WeatherForecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecast.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecast/Pods-WeatherForecast.release.xcconfig"; sourceTree = "<group>"; };
+		74935C97244CB5D900104A76 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		8414368620BD70ED0079D315 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		8423992620B5A8BD009102CE /* Wind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
 		8423992820B5AA5F009102CE /* Pressure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pressure.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				8447ECC220E4FAA000190AE6 /* UIViewControllerExtensions.swift */,
 				8446441B20F8A5AA001FF58E /* SequenceExtensions.swift */,
 				846B94F820FF588700F52B6F /* StringExtensions.swift */,
+				74935C97244CB5D900104A76 /* Data.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				84925D6E20C15F8F00D46DAB /* CityNameTableViewCell.swift in Sources */,
 				8425F6B520D3FA290083415D /* ExpandableHeaderView.swift in Sources */,
 				84A5C2B020EE7FBF00340776 /* OpenWeatherAPI.swift in Sources */,
+				74935C98244CB5D900104A76 /* Data.swift in Sources */,
 				842D345420E1387B0090C92F /* StartScreenController.swift in Sources */,
 				8414368720BD70ED0079D315 /* URLBuilder.swift in Sources */,
 				84925D7920C168FC00D46DAB /* ParameterTableViewCell.swift in Sources */,
