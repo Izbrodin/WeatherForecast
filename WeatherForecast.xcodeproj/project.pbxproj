@@ -115,13 +115,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		454AF0F7CD27F86AFD592A20 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		8423992520B5A897009102CE /* WeatherParameters */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,7 +168,6 @@
 			children = (
 				8484848720B45CB60075981C /* WeatherForecast */,
 				8484848620B45CB60075981C /* Products */,
-				454AF0F7CD27F86AFD592A20 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
