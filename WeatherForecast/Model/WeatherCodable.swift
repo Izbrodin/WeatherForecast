@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherCodeable: Codable {
+struct WeatherCodable: Codable {
     var temperature: Double?
     var conditions: String?
     var windDegrees: Double?
@@ -19,41 +19,41 @@ struct WeatherCodeable: Codable {
     var sunsetTime: Date?
     var icon: String?
     var date: Date?
-    
-     enum CodingKeys: String, CodingKey {
+
+    enum CodingKeys: String, CodingKey {
         case weather, mainParameters = "main", wind, date = "dt", systemInfo = "sys"
-        
-        enum WeatherParameters: String, CodingKey {
-            case description, icon
-        }
-        
-        enum MainParameters: String, CodingKey {
-            case temperature = "temp", pressure, humidity
-        }
-        
-        enum WindParameters: String, CodingKey {
-            case speed, degrees = "deg"
-        }
-        
-        enum SystemParameters: String, CodingKey {
-            case sunrise, sunset
-        }
+    }
+
+    enum WeatherParameters: String, CodingKey {
+        case description, icon
+    }
+
+    enum MainParameters: String, CodingKey {
+        case temperature = "temp", pressure, humidity
+    }
+
+    enum WindParameters: String, CodingKey {
+        case speed, degrees = "deg"
+    }
+
+    enum SystemParameters: String, CodingKey {
+        case sunrise, sunset
     }
 }
 
-extension WeatherCodeable {
-    
+extension WeatherCodable {
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         var weather = try container.nestedUnkeyedContainer(forKey: .weather)
-        let weatherParameters = try weather.nestedContainer(keyedBy: CodingKeys.WeatherParameters.self)
+        let weatherParameters = try weather.nestedContainer(keyedBy: WeatherParameters.self)
 
-        let main = try container.nestedContainer(keyedBy: CodingKeys.MainParameters.self, forKey: .mainParameters)
-        
-        let wind = try container.nestedContainer(keyedBy: CodingKeys.WindParameters.self, forKey: .wind)
-        
-        let systemInfo = try container.nestedContainer(keyedBy: CodingKeys.SystemParameters.self, forKey: .systemInfo)
+        let main = try container.nestedContainer(keyedBy: MainParameters.self, forKey: .mainParameters)
+
+        let wind = try container.nestedContainer(keyedBy: WindParameters.self, forKey: .wind)
+
+        let systemInfo = try container.nestedContainer(keyedBy: SystemParameters.self, forKey: .systemInfo)
 
         self.temperature = try? main.decode(Double.self, forKey: .temperature)
         self.conditions = try? weatherParameters.decode(String.self, forKey: .description)
@@ -70,14 +70,14 @@ extension WeatherCodeable {
     func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             var weather = container.nestedUnkeyedContainer(forKey: .weather)
-            var weatherParameters = weather.nestedContainer(keyedBy: CodingKeys.WeatherParameters.self)
-            
-            var main = container.nestedContainer(keyedBy: CodingKeys.MainParameters.self, forKey: .mainParameters)
-            
-            var wind = container.nestedContainer(keyedBy: CodingKeys.WindParameters.self, forKey: .wind)
-            
-            var systemInfo = container.nestedContainer(keyedBy: CodingKeys.SystemParameters.self, forKey: .systemInfo)
-            
+            var weatherParameters = weather.nestedContainer(keyedBy: WeatherParameters.self)
+
+            var main = container.nestedContainer(keyedBy: MainParameters.self, forKey: .mainParameters)
+
+            var wind = container.nestedContainer(keyedBy: WindParameters.self, forKey: .wind)
+
+            var systemInfo = container.nestedContainer(keyedBy: SystemParameters.self, forKey: .systemInfo)
+
             try? main.encode(temperature, forKey: .temperature)
             try? weatherParameters.encode(conditions, forKey: .description)
             try? wind.encode(windDegrees, forKey: .degrees)

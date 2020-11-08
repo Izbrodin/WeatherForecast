@@ -9,8 +9,8 @@
 import Foundation
 
 struct WeatherForecastCodeable: Decodable {
-    var listOfWeather: [WeatherCodeable] = []
-    
+    var listOfWeather: [WeatherCodable] = []
+
     private enum CodingKeys: String, CodingKey {
         case list
     }
@@ -19,7 +19,7 @@ struct WeatherForecastCodeable: Decodable {
 extension WeatherForecastCodeable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-       
-        listOfWeather = try container.decode([WeatherCodeable].self, forKey: .list)
+
+        listOfWeather = try container.decode([WeatherCodable].self, forKey: .list)
     }
 }

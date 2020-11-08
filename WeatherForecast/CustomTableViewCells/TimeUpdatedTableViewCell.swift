@@ -12,14 +12,14 @@ class TimeUpdatedTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var updatedLabel: UILabel!
     @IBOutlet weak private var timeUpdated: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         updatedLabel.text = "Обновлено:"
         updatedLabel.setFontSizeFitWidth()
         timeUpdated.setFontSizeFitWidth()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         timeUpdated.text = nil
@@ -29,7 +29,7 @@ class TimeUpdatedTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
+
     func updateTime(from weather: CurrentWeather?) {
         if let dateAndTime = weather?.dateAndTime {
             timeUpdated.text = dateAndTime

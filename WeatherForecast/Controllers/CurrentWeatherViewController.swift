@@ -1,58 +1,56 @@
 import UIKit
 
 class CurrentWeatherViewController: UIViewController {
-    
+
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
-    
+
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
-        
+
         indicator.hidesWhenStopped = true
         indicator.style = .gray
         indicator.color = UIColor.gray
-        
+
         return indicator
     }()
-    
+
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .gray
         refreshControl.addTarget(self, action: #selector(loadCurrentWeather), for: .valueChanged)
         return refreshControl
     }()
-    
+
     private var previouslyDisplayedCity: String!
-    private var weather: WeatherCodeable?
+    private var weather: WeatherCodable?
     private var currentWeather: CurrentWeather?
-    
-    private let cellTypes = CellType.allValues
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         registerCells()
-        
+
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
-        
+
         tableViewCurrentWeather.refreshControl = refreshControl
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
+        if previouslyDisplayedCity != SettingsManager.sharedInstance.cityName {
             //hide tableview until data received
             self.tableViewCurrentWeather.isHidden = true
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (previouslyDisplayedCity != SettingsManager.sharedInstance.cityName) {
+        if previouslyDisplayedCity != SettingsManager.sharedInstance.cityName {
             activityIndicator.startAnimating()
             loadCurrentWeather()
         }
     }
-    
+
     @objc
     func loadCurrentWeather() {
         previouslyDisplayedCity = SettingsManager.sharedInstance.cityName
@@ -77,43 +75,43 @@ extension CurrentWeatherViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellTypes.count
+        return CellType.allCases.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowNumber = indexPath.row
-        switch cellTypes[rowNumber] {
-        case .CityName:
+        switch CellType.allCases[rowNumber] {
+        case .cityName:
             let cell: CityNameTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.updateCity()
             return cell
-        case .TimeUpdated:
+        case .timeUpdated:
             let cell: TimeUpdatedTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.updateTime(from: currentWeather)
             return cell
-        case .Description:
+        case .description:
             let cell: DescriptionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.update(from: currentWeather)
             return cell
-        case .Wind:
+        case .wind:
             let cell: WindTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.update(from: currentWeather)
             return cell
-        case .Pressure:
+        case .pressure:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.updatePressure(from: currentWeather)
             return cell
-        case .Humidity:
+        case .humidity:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.updateHumidity(from: currentWeather)
             return cell
-        case .Sunrise:
+        case .sunrise:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.update(parameter: .sunrise, from: currentWeather)
             return cell
-        case .Sunset:
+        case .sunset:
             let cell: ParameterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.update(parameter: .sunset, from: currentWeather)
             return cell

@@ -5,7 +5,7 @@ class CustomDateFormatter {
         formatter.calendar = SettingsManager.sharedInstance.calendar
         return formatter.string(from: date)
     }
-    
+
     static func dateFromString(_ string: String) -> Date {
         let dateFormatter = DateFormatter()
         if let date = dateFormatter.date(from: string) {
